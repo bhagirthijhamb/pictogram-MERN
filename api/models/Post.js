@@ -24,7 +24,8 @@ const CommentSchema = new Schema({
 const postSchema = new Schema({
     body: String,
     user: { type: ObjectId, ref: "User" },
-    comments: [CommentSchema]
+    comments: [CommentSchema],
+    imageUrl: { type: String, default: "no img"}
 })
 
 mongoose.model('Post', postSchema);
