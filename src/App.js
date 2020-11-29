@@ -7,7 +7,7 @@ import Login from './components/pages/Login';
 import Signup from './components/pages/Signup';
 import User from './components/pages/User';
 // MUI 
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 const theme = createMuiTheme({
