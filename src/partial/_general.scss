@@ -10,6 +10,14 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 
 html {
     font-size: 90%;
+    color: #333;
+}
+
+// Google font
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
+.brand-logo {
+    font-family: 'Grand Hotel', cursive;
 }
 
 // Variables
@@ -19,8 +27,8 @@ html {
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 1400px;
+  margin: 80px auto 0 auto;
+  max-width: 1200px;
 }
 
 li {
