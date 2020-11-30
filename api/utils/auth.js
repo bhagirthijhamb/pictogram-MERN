@@ -1,8 +1,9 @@
 const { verifyToken } = require('./../utils/tokenService');
+const User = require('./../users/userModel');
+
 
 exports.verifyToken = async(req, res, next) => {
     const { cookies } = req;
-    console.log(req.cookies);
     try {
         // console.log('inside virify');
         if(!cookies || !cookies.token){
@@ -10,9 +11,10 @@ exports.verifyToken = async(req, res, next) => {
             return;
         }
         const token = cookies.token;
-        // { id: someuserid }
-        const userToken = await verifyToken(token);
-        req.user = userToken;
+        const user = await verifyToken(token);
+        const userData = await User.findById(user.id);
+        req.user = userData;
+        console.log(req.user);
         next();
     } catch(err) {
         res.status(403).json({ message: 'invalid or expired token' })

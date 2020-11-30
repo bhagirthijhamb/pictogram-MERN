@@ -8,11 +8,12 @@ exports.createToken = (user) => {
 
 exports.verifyToken = async(token) => {
     let user;
-    jwt.verify(token, KEY, (err, decoded) => {
+    jwt.verify(token, KEY, (err, payload) => {
         if(err){
             throw err;
         } 
-        user = decoded;
+        user = payload;
+        // console.log(user);
     })
     return user;
 }

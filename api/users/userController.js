@@ -1,6 +1,16 @@
 const User = require('./userModel');
 const { validateSignupData, validateLoginData } = require('./../utils/validators');
-const { createToken }  = require('./../utils/tokenService')
+const { createToken }  = require('./../utils/tokenService');
+const { find } = require('./userModel');
+
+const findUserByEmail = async(email) => {
+    try {
+        const user = await User.findOne({ email: email });
+        return user;
+    } catch(err){
+        throw err;
+    }
+}
 
 const findUserById = async (id) => {
     try {
@@ -29,7 +39,7 @@ module.exports =  {
         // res.json({message: "created successfully"})
 
         try {
-            const foundUser = await User.findOne({ email: email })
+            const foundUser = await findUserByEmail(email)
             if(foundUser) {
                 return res.status(400).json({ error: `Email address ${email} already taken, try another email address.`})
             }    
@@ -51,9 +61,9 @@ module.exports =  {
         if(!valid) return res.status(422).json(errors);
 
         try {
-            const user = await User.findOne({ email: email})
+            const user = await findUserByEmail(email)
             if(!user) {
-                res.status(400).json({ message: "email does not exist', please register"});
+                res.status(400).json({ message: "Invalid email or password"});
                 return;
             } else {
                 // if(user && user.password === password) {
@@ -63,7 +73,7 @@ module.exports =  {
                 // }
                 const isMatch = await user.comparePasswords(password);
                 if(!isMatch){
-                    res.status(400).json({ message: "Unauthorized"});
+                    res.status(400).json({ message: "Invalid email or password"});
                     return;
                 } else {
                     const token = createToken({ id: user._id });
@@ -81,14 +91,9 @@ module.exports =  {
     },
     getMyDetails: async(req, res) => {
         try {
-            // if(!cookies || !cookies.token){
-            //     res.status(403).json({ message: 'authorozation required' });
-            //     return;
-            // }
-            // const token = cookies.token;
-            // const userToken = await verifyToken(token);
-            const user = await findUserById(req.user.id);
-            res.json({ user: user });
+            // console.log('from /me route', req.user);
+            // const user = await findUserById(req.user.id);
+            res.json({ user: req.user });
         } catch(err) {
             console.log(err);
             res.status(500).json({ message: 'Something went wrong'})
