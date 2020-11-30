@@ -19,33 +19,22 @@ const customMiddleware = (req, res, next) => {
 // use middleware for all the routes
 // app.use(customMiddleware);
 
-// Models
-require('./models/User');
-require('./models/Post')
-// mongoose.model('User')
-
-const users = require('./routes/userRoutes');
-const posts = require('./routes/postRoutes');
+const userRoutes = require('./users/userRoutes');
+const postRoutes = require('./posts/postRoutes');
 // User Routes
-app.get('/api/users', users.getUsers);
-app.post('/api/users/signup', users.signup);
+app.use('/api/users', userRoutes)
 // Post Routes
-app.get('/api/posts', posts.getPosts);
-app.post('/api/posts/post', posts.createPost);
+app.use('/api/posts', postRoutes)
 
 // connect to database
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log(`Successfuly connected to: ${uri}`))
+    .then(async () => {
+        console.log(`Successfuly connected to: ${uri}`)
+        // Start Server
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    })
     .catch(err => console.log(err.message));
 
 
-
-// TO DO
-// define routes
-app.get('/', (req, res) => {
-
-    res.send('Hello World !')
-})
-
 // Start Server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

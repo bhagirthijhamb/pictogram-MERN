@@ -18,14 +18,14 @@ const { Schema } = mongoose;
 const { ObjectId } = mongoose.Schema.Types;
 
 const CommentSchema = new Schema({
-    body: String
+    text: String
 })
 
 const postSchema = new Schema({
-    body: String,
+    text: String,
     user: { type: ObjectId, ref: "User" },
     comments: [CommentSchema],
     imageUrl: { type: String, default: "no img"}
 })
 
-mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', postSchema);

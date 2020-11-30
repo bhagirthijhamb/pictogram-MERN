@@ -1,7 +1,6 @@
 import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Components
-import Navbar from './components/Navbar';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import Signup from './components/pages/Signup';
@@ -28,7 +27,6 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <Router>
-      <Navbar />
         <div className="container">
           <Switch>
             <Route exact path='/' component={Home} />
