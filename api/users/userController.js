@@ -2,6 +2,19 @@ const User = require('./userModel');
 const { validateSignupData, validateLoginData } = require('./../utils/validators');
 const { createToken }  = require('./../utils/tokenService')
 
+const findUserById = async (id) => {
+    try {
+        const user = await User.findById(id);
+        return {
+            id: user._id,
+            name: user.name,
+            email: user.email
+        }
+    } catch(ex) {
+        throw(ex);
+    }
+}
+
 module.exports =  {
     getUsers: async (req,res) => {
         const users = await User.find();
@@ -65,5 +78,20 @@ module.exports =  {
             next(err);
         }
 
+    },
+    getMyDetails: async(req, res) => {
+        try {
+            // if(!cookies || !cookies.token){
+            //     res.status(403).json({ message: 'authorozation required' });
+            //     return;
+            // }
+            // const token = cookies.token;
+            // const userToken = await verifyToken(token);
+            const user = await findUserById(req.user.id);
+            res.json({ user: user });
+        } catch(err) {
+            console.log(err);
+            res.status(500).json({ message: 'Something went wrong'})
+        }
     }
 }

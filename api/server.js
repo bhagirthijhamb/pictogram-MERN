@@ -1,14 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// require routers
-
+const cookieParser = require('cookie-parser');
 const app = express();
 
-const PORT = 5000;
-const dbName = 'pictogram';
-const uri = `mongodb://localhost:27017/${dbName}`;
 
 
+app.use(cookieParser());
 // Express body parser middleware
 app.use(express.json({ extended: false }));
 // Define middleware
@@ -18,6 +15,10 @@ const customMiddleware = (req, res, next) => {
 }
 // use middleware for all the routes
 // app.use(customMiddleware);
+
+const PORT = 5000;
+const dbName = 'pictogram';
+const uri = `mongodb://localhost:27017/${dbName}`;
 
 const userRoutes = require('./users/userRoutes');
 const postRoutes = require('./posts/postRoutes');

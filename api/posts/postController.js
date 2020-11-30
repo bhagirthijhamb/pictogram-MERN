@@ -1,4 +1,10 @@
+const { verifyToken } = require('../utils/tokenService');
 const Post = require('./postModel');
+
+// const findUserByEmail = async () => {
+
+// }
+
 
 module.exports = {
     getPosts: async (req, res) => {
@@ -34,5 +40,6 @@ module.exports = {
                 console.log(err);
                 res.status(500).json({ general: "Something went wrong"})
             }
-        }
+        },
+    
 }
