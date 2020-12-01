@@ -41,5 +41,15 @@ module.exports = {
                 res.status(500).json({ general: "Something went wrong"})
             }
         },
-    
+    getMyPosts: async(req, res) => {
+        // console.log(req.user)
+        try {
+            const myPosts = await Post.find({ author: req.user._id }).populate("author", "_id name");
+            if(myPosts){
+                res.json({myPosts})
+            }
+        } catch(err){
+            console.log(err);
+        }
+    }
 }
