@@ -9,6 +9,7 @@ router.route('/')
     .post(createUser) // POST /api/users/
 
 router.route('/login').post(loginUser) // POST /api/users/login/
-router.use(verifyToken).route('/me').get(getMyDetails) // POST /api/users/login/
+// router.use(verifyToken).route('/me').get(getMyDetails) // POST /api/users/login/
+router.route('/me').get(getMyDetails) // POST /api/users/login/
 
 module.exports = router;

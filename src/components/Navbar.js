@@ -105,6 +105,7 @@ const NavBar = () => {
                         aria-haspopup="true"
                         // onClick={handleProfileMenuOpen}
                         color="inherit"
+                        component={Link} to="/users/me"
                         >
                         <AccountCircleIcon />
                     </IconButton>

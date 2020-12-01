@@ -35,7 +35,10 @@ function App() {
               <Route exact path='/' component={Home} />
               <Route exact path='/signup' component={Signup} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/users/:handle' component={User} />
+              <Route path='/users/me' component={User} />
+              {/* <Route exact path='/users/:handle' component={User} /> */}
+              {/* <Route path='/posts/createPost' component={User} /> */}
+
             </Switch>
           </div>
         </Router>
