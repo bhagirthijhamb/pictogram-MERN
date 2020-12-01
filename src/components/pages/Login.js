@@ -10,9 +10,12 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
+import { AppContext } from '../../context/appContext';
+import { useContext, useEffect, useCallback } from 'react';
+import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS } from '../../context/types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,10 +50,56 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignInSide(props) {
   const classes = useStyles();
+  const [state, dispatch] = useContext(AppContext); 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
-  const [ error, setError ] = useState('');
-  const handleSubmit = () => {}
+  const [ errors, setErrors ] = useState({});
+  const history = useHistory();
+
+
+  useEffect(() => {
+    if(state.ui.errors){
+      dispatch({ type: CLEAR_ERRORS })
+      setErrors(state.ui.errors)
+    }
+  }, [state.ui.errors])
+
+  async function handleSubmit(e){
+      // dispatch({ type: LOADING_UI });
+      try {
+          e.preventDefault();
+          dispatch({ type: LOADING_UI });
+          const url = `/api/users/login`;
+          const method = 'POST';
+          const response = await fetch(url, {
+              method,
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ password, email })
+          })
+          const data = await response.json();
+          console.log(data)
+          if(!response.ok){
+            // throw new Error(data)
+            dispatch({
+              type: SET_ERRORS,
+              payload: data
+            })
+          }
+          if(response.ok){
+            history.push('/');
+
+          }
+      } catch(err){
+          console.log(err)
+          dispatch({
+            type: SET_ERRORS,
+            payload: err
+          })
+      }
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -63,7 +112,7 @@ export default function SignInSide(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          { error !== '' && <Typography color="error">{error}</Typography>}
+          {/* { error !== '' && <Typography color="error">{error}</Typography>} */}
           <form className={classes.form} onSubmit={handleSubmit} noValidate>
             <TextField
               variant="outlined"
@@ -76,6 +125,8 @@ export default function SignInSide(props) {
               autoComplete="email"
               autoFocus
               value={email}
+              helperText={errors.email} 
+              error={errors.email ? true : false}
               onChange={(e) => { setEmail(e.target.value); }}
             />
             <TextField
@@ -89,6 +140,8 @@ export default function SignInSide(props) {
               id="password"
               autoComplete="current-password"
               value={password}
+              helperText={errors.password} 
+              error={errors.password ? true : false}
               onChange={(e) => { setPassword(e.target.value); }}
             />
             <FormControlLabel

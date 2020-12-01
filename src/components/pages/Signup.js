@@ -16,8 +16,6 @@ import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
 import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS } from '../../context/types';
 
-
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
