@@ -4,7 +4,7 @@ const Post = require('./postModel');
 module.exports = {
     getPosts: async (req, res) => {
             try {
-                const posts = await Post.find();
+                const posts = await Post.find().populate("author", "_id name");
                 if(posts){
                     return res.status(200).json({ posts })
                 }
