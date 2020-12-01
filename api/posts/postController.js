@@ -6,7 +6,8 @@ module.exports = {
             try {
                 const posts = await Post.find().populate("author", "_id name");
                 if(posts){
-                    return res.status(200).json({ posts })
+                    console.log(posts)
+                    return res.status(200).json(posts)
                 }
             } catch (err) {
                 console.log(err);

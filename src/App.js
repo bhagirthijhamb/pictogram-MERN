@@ -1,5 +1,7 @@
 import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// App Context
+import { AppContextProvider } from './context/appContext';
 // Components
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
@@ -26,16 +28,18 @@ const theme = createMuiTheme({
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <Router>
-        <div className="container">
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/signup' component={Signup} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/users/:handle' component={User} />
-          </Switch>
-        </div>
-    </Router>
+      <AppContextProvider>
+        <Router>
+          <div className="container">
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/signup' component={Signup} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/users/:handle' component={User} />
+            </Switch>
+          </div>
+        </Router>
+      </AppContextProvider>
     </MuiThemeProvider>
   );
 }
