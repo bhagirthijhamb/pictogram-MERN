@@ -1,6 +1,6 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_POSTS, LOADING_DATA } from './types';
+import { SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS} from './types';
 
 export const AppContext = createContext();
 
@@ -35,14 +35,51 @@ const appReducer = (state, action) => {
                     loading: true
                 }
             }
+        case LOADING_UI:
+            return {
+                ...state,
+                ui: {
+                    ...state.ui,
+                    loading: true
+                }
+            }
+        case SET_ERRORS:
+            return {
+                ...state,
+                ui: {
+                    ...state.ui,
+                    loading: false,
+                    errors: action.payload
+                }
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                ui: {
+                    ...state.ui,
+                    loading: false,
+                    errors: null,
+                }
+            }
         case SET_POSTS:
-            console.log(action.payload)
             return {
                 ...state,
                 post: {
                     ...state.post,
                     posts: action.payload,
                     loading: false
+                }
+            }
+        case POST_POST:
+            console.log('inside post-post')
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    posts: [
+                        action.payload,
+                        ...state.post.posts
+                    ]
                 }
             }
         default:

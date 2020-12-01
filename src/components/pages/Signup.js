@@ -10,7 +10,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+import { AppContext } from '../../context/appContext';
+import { useContext, useEffect, useCallback } from 'react';
+import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS } from '../../context/types';
+
+
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,15 +38,59 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp(props) {
+const SignUp = () => {
   const classes = useStyles();
+  const [state, dispatch] = useContext(AppContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [name, setName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  const [errors, setErrors] = useState({})
+  const history = useHistory();
+  
+  useEffect(() => {
+    if(state.ui.errors){
+      dispatch({ type: CLEAR_ERRORS })
+      setErrors(state.ui.errors)
+    }
+  }, [state.ui.errors])
+  
+  console.log(errors)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  async function handleSubmit(e){
+      // dispatch({ type: LOADING_UI });
+      try {
+          e.preventDefault();
+          dispatch({ type: LOADING_UI });
+          const url = `/api/users/`;
+          const method = 'POST';
+          const response = await fetch(url, {
+              method,
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name, password, email })
+          })
+          const data = await response.json();
+          console.log(data)
+          if(!response.ok){
+            // throw new Error(data)
+            dispatch({
+              type: SET_ERRORS,
+              payload: data
+            })
+          }
+          if(response.ok){
+            history.push('/login');
+
+          }
+      } catch(err){
+          console.log(err)
+          dispatch({
+            type: SET_ERRORS,
+            payload: err
+          })
+      }
   }
   return (
     <Container component="main" maxWidth="xs">
@@ -54,8 +104,8 @@ export default function SignUp(props) {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
+            {/* <Grid item xs={12} sm={6}> */}
+              {/* <TextField
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -66,19 +116,21 @@ export default function SignUp(props) {
                 autoFocus
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+              /> */}
+            {/* </Grid> */}
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
+                id="ame"
+                label="Name"
+                name="name"
                 autoComplete="lname"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                helperText={errors.name} 
+                error={errors.name ? true : false}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -90,6 +142,8 @@ export default function SignUp(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                helperText={errors.email} 
+                error={errors.email ? true : false}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -104,6 +158,8 @@ export default function SignUp(props) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                helperText={errors.password} 
+                error={errors.password ? true : false}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -136,3 +192,5 @@ export default function SignUp(props) {
     </Container>
   );
 }
+
+export default SignUp;

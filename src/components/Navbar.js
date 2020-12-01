@@ -1,3 +1,4 @@
+import CreatePost from './post/CreatePost';
 import { Link } from 'react-router-dom';
 // MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -90,6 +91,7 @@ const NavBar = () => {
                 </div>
                 <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
+                    <CreatePost />
                     <Button color="inherit" component={Link} to="/login">Login</Button>
                     <Button color="inherit" component={Link} to="/signup">Signup</Button>
                     <Button color="inherit" component={Link} to="/">Home</Button>

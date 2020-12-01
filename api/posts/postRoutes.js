@@ -8,6 +8,7 @@ const Post = require('./postModel');
 
 router.route('/').get(getPosts)
 router.use(verifyToken).route('/').post(createPost);
+// router.route('/').post(createPost);
 router.use(verifyToken).route('/myPosts').get(getMyPosts);
 
 module.exports = router;

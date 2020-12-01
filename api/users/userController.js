@@ -31,8 +31,9 @@ module.exports =  {
         if(users) return res.json(users);
     },
     createUser: async (req, res) => {
-        const { name, email, password, confirmPassword } = req.body;
+        const { name, email, password } = req.body;
         const { valid, errors } = validateSignupData(req.body);
+        console.log(errors);
         // 400 - Bad request
         // 422 - Unprocessable enttiy, server has understood the request but cannot process it
         if(!valid) return res.status(422).json(errors);

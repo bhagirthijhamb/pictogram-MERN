@@ -22,6 +22,7 @@ module.exports = {
                     return res.status(400).json({ message: "Must not be empty" });
                 }
                 console.log(req.user);
+                console.log('in bac-end', text);
                 req.user.password = undefined;
                 const postData = new Post({
                     text,

@@ -6,8 +6,6 @@ import { LOADING_DATA, SET_POSTS } from './../../context/types';
 
 //
 import { AppContext } from '../../context/appContext';
-//
-// import { getPosts } from '../../context/appActions';
 import { useContext, useEffect, useCallback } from 'react';
 
 
@@ -16,7 +14,6 @@ const Home = () => {
 
     const refresh = useCallback( async() => {
         dispatch({ type: LOADING_DATA });
-        // console.log(state.posts.loading)
         try {
             const response = await fetch('/api/posts');
             const postRes = await response.json();
@@ -32,16 +29,9 @@ const Home = () => {
         refresh(); 
     }, [refresh]);
 
-    // console.log('posts', state.posts.posts)
-    console.log(state.post.loading)
-    console.log(state.post.posts)
-
-    // const { loading, posts } = state.
-
-
     const postsMarup = !state.post.loading ? (
         state.post.posts.map(post =>{
-            console.log(post)
+            // console.log(post)
             return <Post key={post._id} post={post} />
             return <p>{post.text}</p>
         }

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Post = (props) => {
-    console.log(props);
+    const { text, author } = props.post
     const classes = useStyles();
     return (
          <Card className={classes.card}>
@@ -39,10 +39,10 @@ const Post = (props) => {
             <CardContent className={classes.content}>
                 {/* {deleteButton} */}
                 {/* <Typography variant="h5" component={Link} to={`/users/${userHandle}`} color='primary'>{userHandle}</Typography>  */}
-                <Typography variant="h5" component={Link}  color='primary'>{props.post.author.name}</Typography> 
+                {/* <Typography variant="h5" component={Link}  color='primary'>{author.name}</Typography>  */}
                 {/* <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>  */}
                 {/* <Typography variant="body1">{body}</Typography>  */}
-                <Typography variant="body1">{props.post.text}</Typography> 
+                <Typography variant="body1">{text}</Typography> 
                 {/* {likeButton} */}
                 {/* <LikeButton screamId={screamId}/> */}
                 {/* <span>{likeCount} Likes</span> */}
