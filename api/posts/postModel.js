@@ -10,7 +10,7 @@ const postSchema = new Schema({
     text: String,
     author: { type: ObjectId, ref: "User" },
     comments: [CommentSchema],
-    imageUrl: { type: String, default: "no img"}
+    imageUrl: { type: String, required: true}
 })
 
 module.exports = mongoose.model('Post', postSchema);

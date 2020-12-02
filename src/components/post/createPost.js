@@ -10,7 +10,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 //
 import CloseIcon from '@material-ui/icons/Close';
-import { SET_ERRORS, LOADING_UI, POST_POST } from '../../context/types';
+import { SET_ERRORS, LOADING_UI, POST_POST, CLEAR_ERRORS } from '../../context/types';
 import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
 
@@ -24,11 +24,17 @@ const useStyles = makeStyles((theme) => ({
 }))
 const CreatePost = () => {
     const classes = useStyles();
-
     const [state, dispatch] = useContext(AppContext); 
     const [ open, setOpen ] = useState(false);
     const [ text, setText ] = useState('');
+    const [ image, setImage ] = useState('');
+    const [ imageUrl, setImageUrl ] = useState('');
     const [ errors, setErrors ] = useState({});
+
+    // const postDetails = async (e) => {
+    //     e.preventDefault();
+        
+    // }
 
     function handleOpen() { setOpen(true) }
     function handleClose() { 
@@ -38,10 +44,30 @@ const CreatePost = () => {
     function handleChange(e) {
         setText(e.target.value)
     }
+
     async function handleSubmit(e){
+            // console.log('inside postDetails')
+            e.preventDefault();
+        try {
+            const data = new FormData()
+            data.append('file', image);
+            data.append('upload_preset', "pictogram");
+            data.append('cloud_name', 'dbagdzszp');
+            const response = await fetch('https://api.cloudinary.com/v1_1/dbagdzszp/image/upload', {
+                method: 'post',
+                body: data
+            })
+            const dataBack = await response.json();
+            if(dataBack){
+                console.log(dataBack);
+                setImageUrl(dataBack.url);
+            }
+        } catch(err){
+            console.log(err);
+        }
+
         dispatch({ type: LOADING_UI });
         try {
-            e.preventDefault();
             const url = `/api/posts/`;
             const method = 'POST';
             console.log(text)
@@ -50,17 +76,24 @@ const CreatePost = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ text: text })
+                body: JSON.stringify({ text, imageUrl })
             })
             const data = await response.json();
             console.log(data)
-            dispatch({
-                type: POST_POST,
-                payload: data
-            })
+            
             // dispatch(clearErrors())
             if(!response.ok) {
-                throw new Error(data.message)
+                dispatch({
+                    type: SET_ERRORS,
+                    payload: data
+                })
+                dispatch({ type: CLEAR_ERRORS })
+            }
+            if(response.ok){
+                dispatch({
+                    type: POST_POST,
+                    payload: data
+                })
             }
         } catch(err){
             console.log(err)
@@ -93,6 +126,7 @@ const CreatePost = () => {
                             id="raised-button-file"
                             multiple
                             type="file"
+                            onChange={(e) => setImage(e.target.files[0])}
                         />
                         <label htmlFor="raised-button-file">
                             <Button raised component="span" 
@@ -101,7 +135,9 @@ const CreatePost = () => {
                             Upload
                             </Button>
                         </label>
-                        <Button type="submit" variant="contained" color="primary" disabled={state.ui.loading}>Submit
+                        <Button type="submit" variant="contained" color="primary" disabled={state.ui.loading} 
+                        // onClick={(e) => postDetails(e)}
+                        >Submit
                             {state.ui.loading && (
                                 <CircularProgress size={30} className="progressSpinner" />
                             )}

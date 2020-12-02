@@ -16,9 +16,9 @@ module.exports = {
         },
     createPost: async(req, res) => {
             try {
-                const { text } = req.body;
+                const { text, imageUrl } = req.body;
                 // Post data validation
-                if(text.trim() === ""){
+                if(text.trim() === "" || !imageUrl){
                     return res.status(400).json({ message: "Must not be empty" });
                 }
                 console.log(req.user);
@@ -26,6 +26,7 @@ module.exports = {
                 req.user.password = undefined;
                 const postData = new Post({
                     text,
+                    imageUrl,
                     author: req.user 
                 })
                 try {
