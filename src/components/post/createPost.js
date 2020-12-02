@@ -31,12 +31,9 @@ const CreatePost = () => {
     const [ imageUrl, setImageUrl ] = useState('');
     const [ errors, setErrors ] = useState({});
 
-    // const postDetails = async (e) => {
-    //     e.preventDefault();
-        
-    // }
-
-    function handleOpen() { setOpen(true) }
+    function handleOpen() { 
+        setOpen(true) 
+    }
     function handleClose() { 
         setOpen(false) 
         setErrors({})
@@ -46,8 +43,7 @@ const CreatePost = () => {
     }
 
     async function handleSubmit(e){
-            // console.log('inside postDetails')
-            e.preventDefault();
+        e.preventDefault();
         try {
             const data = new FormData()
             data.append('file', image);
@@ -65,46 +61,50 @@ const CreatePost = () => {
         } catch(err){
             console.log(err);
         }
+    }
 
-        dispatch({ type: LOADING_UI });
-        try {
-            const url = `/api/posts/`;
-            const method = 'POST';
-            console.log(text)
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ text, imageUrl })
-            })
-            const data = await response.json();
-            console.log(data)
-            
-            // dispatch(clearErrors())
-            if(!response.ok) {
+    useEffect(async() => {
+        if(imageUrl){
+            dispatch({ type: LOADING_UI });
+            try {
+                const url = `/api/posts/`;
+                const method = 'POST';
+                console.log(text)
+                const response = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text, imageUrl })
+                })
+                const data = await response.json();
+                console.log(data)
+                
+                // dispatch(clearErrors())
+                if(!response.ok) {
+                    dispatch({
+                        type: SET_ERRORS,
+                        payload: data
+                    })
+                    dispatch({ type: CLEAR_ERRORS })
+                }
+                if(response.ok){
+                    dispatch({
+                        type: POST_POST,
+                        payload: data
+                    })
+                }
+            } catch(err){
+                console.log(err)
                 dispatch({
                     type: SET_ERRORS,
-                    payload: data
+                    payload: err
                 })
-                dispatch({ type: CLEAR_ERRORS })
+                setErrors()
             }
-            if(response.ok){
-                dispatch({
-                    type: POST_POST,
-                    payload: data
-                })
-            }
-        } catch(err){
-            console.log(err)
-            dispatch({
-                type: SET_ERRORS,
-                payload: err
-            })
-            setErrors()
         }
-    }
-    console.log(state.ui.loading);
+    }, [imageUrl])
+    // console.log(state.ui.loading);
     return (
         <Fragment>
             <Button onClick={handleOpen}>

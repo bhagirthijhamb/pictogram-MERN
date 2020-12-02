@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignInSide(props) {
+export default function Login(props) {
   const classes = useStyles();
   const [state, dispatch] = useContext(AppContext); 
   const [ email, setEmail ] = useState('');
@@ -65,39 +65,39 @@ export default function SignInSide(props) {
   }, [state.ui.errors])
 
   async function handleSubmit(e){
-      // dispatch({ type: LOADING_UI });
-      try {
-          e.preventDefault();
-          dispatch({ type: LOADING_UI });
-          const url = `/api/users/login`;
-          const method = 'POST';
-          const response = await fetch(url, {
-              method,
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ password, email })
-          })
-          const data = await response.json();
-          console.log(data)
-          if(!response.ok){
-            // throw new Error(data)
-            dispatch({
-              type: SET_ERRORS,
-              payload: data
-            })
-          }
-          if(response.ok){
-            history.push('/');
-
-          }
-      } catch(err){
-          console.log(err)
+    // dispatch({ type: LOADING_UI });
+    try {
+        e.preventDefault();
+        dispatch({ type: LOADING_UI });
+        const url = `/api/users/login`;
+        const method = 'POST';
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password })
+        })
+        const data = await response.json();
+        console.log(data)
+        if(!response.ok){
+          // throw new Error(data)
           dispatch({
             type: SET_ERRORS,
-            payload: err
+            payload: data
           })
-      }
+        }
+        props.getUser();
+        // if(response.ok){
+        //   history.push('/');
+        // }
+    } catch(err){
+        console.log(err)
+        dispatch({
+          type: SET_ERRORS,
+          payload: err
+        })
+    }
   }
 
   return (

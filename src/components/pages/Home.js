@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 // components
-import Navbar from './../Navbar';
+import Navbar from './../layout/Navbar';
 import Post from './../post/Post'
 import { LOADING_DATA, SET_POSTS } from './../../context/types';
 

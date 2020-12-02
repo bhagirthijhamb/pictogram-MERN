@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignUp = () => {
+const SignUp = (props) => {
   const classes = useStyles();
   const [state, dispatch] = useContext(AppContext); 
   const [email, setEmail] = useState('');
@@ -53,42 +53,56 @@ const SignUp = () => {
     }
   }, [state.ui.errors])
   
-  console.log(errors)
+  async function signUpUser(){
+    try {
+      dispatch({ type: LOADING_UI });
+      const url = `/api/users/`;
+      const method = 'POST';
+      const response = await fetch(url, {
+          method,
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, email, password })
+      })
+      const data = await response.json();
+      console.log(data)
+      if(!response.ok){
+        // throw new Error(data)
+        dispatch({
+          type: SET_ERRORS,
+          payload: data
+        })
+      }
 
+      // if(response.ok){
+      //   history.push('/login');
+      // }
+      const loginResponse = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
+      console.log(loginResponse);
+      if(!loginResponse.ok){
+        throw new Error(data.message);
+      }
+      props.getUser();
+    } catch(err){
+      console.log(err)
+      props.updateUser(undefined);
+      dispatch({
+        type: SET_ERRORS,
+        payload: err
+      })
+    }
+  }
   async function handleSubmit(e){
       // dispatch({ type: LOADING_UI });
-      try {
-          e.preventDefault();
-          dispatch({ type: LOADING_UI });
-          const url = `/api/users/`;
-          const method = 'POST';
-          const response = await fetch(url, {
-              method,
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ name, password, email })
-          })
-          const data = await response.json();
-          console.log(data)
-          if(!response.ok){
-            // throw new Error(data)
-            dispatch({
-              type: SET_ERRORS,
-              payload: data
-            })
-          }
-          if(response.ok){
-            history.push('/login');
-
-          }
-      } catch(err){
-          console.log(err)
-          dispatch({
-            type: SET_ERRORS,
-            payload: err
-          })
-      }
+      e.preventDefault();
+      signUpUser();
   }
   return (
     <Container component="main" maxWidth="xs">

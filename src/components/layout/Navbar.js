@@ -1,4 +1,4 @@
-import CreatePost from './post/CreatePost';
+import CreatePost from './../post/CreatePost';
 import { Link } from 'react-router-dom';
 // MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +15,12 @@ import { Button } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+    navContainer: {
+        width: "1200px",
+        display: 'flex',
+        alignItems: "center",
+        margin: "0 auto"
+    },
     grow: {
         flexGrow: 1,
     },
@@ -27,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.white, 0.25),
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
@@ -78,52 +84,52 @@ const NavBar = () => {
     return (
         <AppBar>
             <Toolbar>
-                <Typography className={classes.title} variant="h6" noWrap>Pictogram</Typography>
-                <div className={classes.search}>
-                {/* <div> */}
-                    <div className={classes.searchIcon}>
-                    {/* <div> */}
-                        <SearchIcon />
+                <div className={classes.navContainer}>
+                        <Typography className={classes.title} variant="h6" noWrap>Pictogram</Typography>
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon />
+                        </div>
                         <InputBase placeholder="Search..." classes={{ root: classes.inputRoot, input: classes.inputInput }} inputProps={{ 'aria-label': 'search' }}
-                        // <InputBase placeholder="Search..." inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
+                    <div className={classes.grow} />
+                    <div className={classes.sectionDesktop}>
+                        <CreatePost />
+                        <Button color="inherit" component={Link} to="/login">Login</Button>
+                        <Button color="inherit" component={Link} to="/signup">Signup</Button>
+                        <Button color="inherit" component={Link} to="/">Home</Button>
+                        <IconButton aria-label="show 17 new notifications" color="inherit">
+                            <Badge badgeContent={17} color="secondary">
+                                <NotificationsIcon />
+                            </Badge>
+                        </IconButton>
+                        <IconButton
+                            edge="end"
+                            aria-label="account of current user"
+                            // aria-controls={menuId}
+                            aria-haspopup="true"
+                            // onClick={handleProfileMenuOpen}
+                            color="inherit"
+                            component={Link} to="/users/me"
+                            >
+                            <AccountCircleIcon />
+                        </IconButton>
+                    </div>
+                    <div className={classes.sectionMobile}>
+                    {/* <div> */}
+                        <IconButton
+                            aria-label="show more"
+                            // aria-controls={mobileMenuId}
+                            aria-haspopup="true"
+                            // onClick={handleMobileMenuOpen}
+                            color="inherit"
+                            >
+                            <MoreVertIcon />
+                        </IconButton>
+                    </div>
                 </div>
-                <div className={classes.grow} />
-                <div className={classes.sectionDesktop}>
-                    <CreatePost />
-                    <Button color="inherit" component={Link} to="/login">Login</Button>
-                    <Button color="inherit" component={Link} to="/signup">Signup</Button>
-                    <Button color="inherit" component={Link} to="/">Home</Button>
-                    <IconButton aria-label="show 17 new notifications" color="inherit">
-                        <Badge badgeContent={17} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <IconButton
-                        edge="end"
-                        aria-label="account of current user"
-                        // aria-controls={menuId}
-                        aria-haspopup="true"
-                        // onClick={handleProfileMenuOpen}
-                        color="inherit"
-                        component={Link} to="/users/me"
-                        >
-                        <AccountCircleIcon />
-                    </IconButton>
-                </div>
-                <div className={classes.sectionMobile}>
-                {/* <div> */}
-                    <IconButton
-                        aria-label="show more"
-                        // aria-controls={mobileMenuId}
-                        aria-haspopup="true"
-                        // onClick={handleMobileMenuOpen}
-                        color="inherit"
-                        >
-                        <MoreVertIcon />
-                    </IconButton>
-                </div>
+                
             </Toolbar>
         </AppBar>
         // <nav>

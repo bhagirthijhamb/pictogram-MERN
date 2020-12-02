@@ -93,8 +93,8 @@ module.exports =  {
     getMyDetails: async(req, res) => {
         try {
             // console.log('from /me route', req.user);
-            // const user = await findUserById(req.user.id);
-            res.json({ user: req.user });
+            const user = await findUserById(req.user.id);
+            res.json({ data: user });
         } catch(err) {
             console.log(err);
             res.status(500).json({ message: 'Something went wrong'})
