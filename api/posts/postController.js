@@ -82,7 +82,7 @@ module.exports = {
             }).exec()
 
             if(unlikedPost){
-                return res.json(result)
+                return res.json(unlikedPost)
             }
         }  catch(err) {
             console.log(err);

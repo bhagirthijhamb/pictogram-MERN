@@ -21,7 +21,7 @@ import { Button } from '@material-ui/core';
 // Context
 import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
-import {LIKE_POST} from './../../context/types';
+import { LIKE_POST, UNLIKE_POST } from './../../context/types';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
@@ -75,13 +75,6 @@ const Post = (props) => {
                 type: LIKE_POST,
                 payload: data
             })
-            // const newData = data.map(post => {
-            //     if(post._id === data._id){
-            //         return data;
-            //     } else {
-            //         return post
-            //     }
-            // })
 
         } catch (err){
             console.log(err);
@@ -102,6 +95,10 @@ const Post = (props) => {
             })
             const data = await response.json();
             console.log(data)
+            dispatch({
+                type: UNLIKE_POST,
+                payload: data
+            })
         } catch (err){
             console.log(err);
         }
@@ -135,7 +132,9 @@ const Post = (props) => {
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteBorderIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {likePost(_id)}} />
-                    {/* <FavoriteIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {unlikePost(_id)}} /> */}
+                </IconButton>
+                <IconButton aria-label="add to favorites">
+                    <FavoriteIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {unlikePost(_id)}} />
                 </IconButton>
                  <Typography variant="body2" color="textSecondary" component="p">
                     {likes.length} likes
