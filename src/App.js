@@ -7,8 +7,10 @@ import { AppContextProvider } from './context/appContext';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
-import User from './components/pages/User';
 import Footer from './components/layout/Footer';
+import User from './components/profile/User';
+import Navbar from './components/layout/Navbar';
+
 // MUI 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
@@ -33,6 +35,7 @@ const theme = createMuiTheme({
 
 function App() {
   const [user, setUser] = useState(undefined);
+  console.log(user)
 
   const getUser = useCallback(async function() {
     try {
@@ -47,8 +50,6 @@ function App() {
       }
       console.log(json)
       setUser(json.data);
-      console.log('user set')
-      console.log(user);
     } catch (err) {
       setUser(undefined);
       console.log({ err });
@@ -64,6 +65,7 @@ function App() {
       <AppContextProvider>
         <Router>
           <div className="app">
+            {user ? <Navbar /> : null}
             <div className="container">
               <Switch>
                 {/* <Route exact path='/' component={Home} /> */}
@@ -74,7 +76,7 @@ function App() {
                     if(!user){
                       return <Redirect to='/login' />;
                     }
-                    return <Home {...props} />
+                    return <Home user={user} {...props} />
                   }} 
                 />
                 {/* <Route exact path='/signup' component={Signup} /> */}
@@ -99,10 +101,7 @@ function App() {
                     return <Login getUser={getUser} {...props} />
                   }} 
                 />
-                <Route path='/users/me' component={User} />
-                {/* <Route exact path='/users/:handle' component={User} /> */}
-                {/* <Route path='/posts/createPost' component={User} /> */}
-
+                <Route path='/user' component={User} />
               </Switch>
             </div>
             <Footer />

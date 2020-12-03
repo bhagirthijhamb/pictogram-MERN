@@ -1,56 +1,40 @@
+import { Route, Switch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import Grid from '@material-ui/core/Grid';
 // components
-import Navbar from './../layout/Navbar';
-import Post from './../post/Post'
-import { LOADING_DATA, SET_POSTS } from './../../context/types';
+import PostList from './../post/PostList';
+import User from './../profile/User';
+import { SET_USER } from './../../context/types';
 
-//
+
 import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
+import NavBar from '../layout/Navbar';
 
 
-const Home = () => {
+
+const Home = (props) => {
+    let { path, url } = useRouteMatch();
+    console.log(path, url)
+
     const [state, dispatch] = useContext(AppContext); 
-
-    const refresh = useCallback( async() => {
-        dispatch({ type: LOADING_DATA });
-        try {
-            const response = await fetch('/api/posts');
-            const postRes = await response.json();
-            // console.log(postRes);
-            dispatch({ type: SET_POSTS, payload: postRes })
-        } catch(err) {
-            console.log(err)
-            dispatch({ type: SET_POSTS, payload: [] })
-        }
-    }, []);
-
+    
     useEffect(() => {
-        refresh(); 
-    }, [refresh]);
-
-    const postsMarup = !state.post.loading ? (
-        state.post.posts.map(post =>{
-            // console.log(post)
-            return <Post key={post._id} post={post} />
-            return <p>{post.text}</p>
-        }
-        )) : (<p>Loading...</p>)
+        dispatch({ type: SET_USER, payload: props.user })
+    },[props.user])
 
     return (
         <div className="classes root">
-            <Navbar />
-            <Grid container spacing={4}>
-                <Grid item sm={2} xs={12}>
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                    <h2>Home</h2>
-                    {postsMarup}
-                </Grid>
-                <Grid item sm={4} xs={12}>
-                    <h2>Follow..</h2>
-                </Grid>
-            </Grid>
+            {/* <Link to={`${url}/user`}>User</Link> */}
+            {/* <PostList /> */}
+            <Switch>
+                <Route exact path='/' component={PostList} />
+                {/* <Route exact path={path} component={PostList} /> */}
+                {/* <Route path='/user' component={User} /> */}
+                {/* <Route path={`${path}/user`} component={User} /> */}
+            </Switch>
         </div>
         
     )

@@ -1,5 +1,7 @@
 import CreatePost from './../post/CreatePost';
 import { Link } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
+
 // MUI
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -80,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NavBar = () => {
+    let { path, url } = useRouteMatch();
+
     const classes = useStyles();
     return (
         <AppBar>
@@ -96,8 +100,8 @@ const NavBar = () => {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <CreatePost />
-                        <Button color="inherit" component={Link} to="/login">Login</Button>
-                        <Button color="inherit" component={Link} to="/signup">Signup</Button>
+                        {/* <Button color="inherit" component={Link} to="/login">Login</Button> */}
+                        {/* <Button color="inherit" component={Link} to="/signup">Signup</Button> */}
                         <Button color="inherit" component={Link} to="/">Home</Button>
                         <IconButton aria-label="show 17 new notifications" color="inherit">
                             <Badge badgeContent={17} color="secondary">
@@ -111,7 +115,7 @@ const NavBar = () => {
                             aria-haspopup="true"
                             // onClick={handleProfileMenuOpen}
                             color="inherit"
-                            component={Link} to="/users/me"
+                            component={Link} to="/user"
                             >
                             <AccountCircleIcon />
                         </IconButton>
