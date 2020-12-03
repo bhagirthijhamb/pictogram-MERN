@@ -18,7 +18,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     navContainer: {
-        width: "1200px",
+        width: "1000px",
         display: 'flex',
         alignItems: "center",
         margin: "0 auto"
