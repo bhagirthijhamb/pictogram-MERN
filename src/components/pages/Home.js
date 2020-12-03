@@ -15,15 +15,15 @@ import NavBar from '../layout/Navbar';
 
 
 
-const Home = () => {
+const Home = (props) => {
     let { path, url } = useRouteMatch();
     console.log(path, url)
 
     const [state, dispatch] = useContext(AppContext); 
     
-    // useEffect(() => {
-    //     dispatch({ type: SET_USER, payload: props.user })
-    // },[props.user])
+    useEffect(() => {
+        dispatch({ type: SET_USER, payload: props.user })
+    },[props.user])
 
     console.log(state.user);
 

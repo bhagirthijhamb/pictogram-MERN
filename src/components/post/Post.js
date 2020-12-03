@@ -51,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
-
+    console.log(state.user.credentials);
+    // const { user}
     // console.log(props.post);
     const { _id, text, author, imageUrl, likes } = props.post
     // console.log(props.post);
@@ -130,12 +131,14 @@ const Post = (props) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteBorderIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {likePost(_id)}} />
-                </IconButton>
-                <IconButton aria-label="add to favorites">
+                {likes.includes(state.user.credentials.id)
+                ? <IconButton aria-label="add to favorites">
                     <FavoriteIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {unlikePost(_id)}} />
-                </IconButton>
+                  </IconButton>
+                : <IconButton aria-label="add to favorites">
+                    <FavoriteIcon style={{ color: 'grey', fontSize: 28 }} onClick={() => {likePost(_id)}} />
+                  </IconButton>
+                }
                  <Typography variant="body2" color="textSecondary" component="p">
                     {likes.length} likes
                 </Typography>
