@@ -15,7 +15,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
-import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS } from '../../context/types';
+import { SET_ERRORS, LOADING_UI, CLEAR_ERRORS, SET_USER } from '../../context/types';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -88,6 +88,10 @@ export default function Login(props) {
           })
         }
         props.getUser();
+        dispatch({
+          type: SET_USER,
+          payload: data
+        })
         // if(response.ok){
         //   history.push('/');
         // }

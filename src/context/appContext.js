@@ -1,6 +1,6 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_USER, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER} from './types';
+import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER} from './types';
 
 export const AppContext = createContext();
 
@@ -13,6 +13,7 @@ const initialState = {
     user: {
         authenticated: false,
         credentials: {},
+        myPosts: [],
         likes: [],
         notifications: []
     },
@@ -25,12 +26,22 @@ const initialState = {
 const appReducer = (state, action) => {
     switch (action.type) {
         case SET_USER:
+            console.log(action.payload)
             return {
                 ...state,
                 user: {
                     ...state.user,
                     authenticated: true,
-                    ...action.payload
+                    credentials: {...action.payload}
+  
+                }
+            }
+        case SET_USER_POSTS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    myPosts: action.payload
                 }
             }
         case LOADING_DATA: 

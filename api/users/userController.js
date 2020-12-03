@@ -81,7 +81,7 @@ module.exports =  {
                     // save token in the cookie
                     res.cookie('token', token);
                     // send an empty response back
-                    res.status(200).send({});
+                    res.status(200).send(user);
                 }
             }   
         } catch(err) {
