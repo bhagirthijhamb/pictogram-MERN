@@ -87,7 +87,6 @@ export default function Login(props) {
             payload: data
           })
         }
-        props.getUser();
         dispatch({
           type: SET_USER,
           payload: data

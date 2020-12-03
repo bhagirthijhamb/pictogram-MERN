@@ -55,5 +55,39 @@ module.exports = {
         } catch(err){
             console.log(err);
         }
+    },
+    likePost: async(req, res) => {
+        try {
+            const likedPost = await Post.findByIdAndUpdate(req.body.postId, {
+                $push:{likes: req.user._id}
+            }, { 
+                new: true
+            }).exec()
+            // console.log('likedPost', likedPost);
+
+            if(likedPost){
+                return res.json(likedPost);
+            }
+        }  catch(err) {
+            console.log(err);
+            res.status(422).json({error: err})
+        }
+    },
+    unlikePost: async(req, res) => {
+        try {
+            const unlikedPost = await Post.findByIdAndUpdate(req.body.postId, {
+                $pull:{likes: req.user._id}
+            }, { 
+                new: true
+            }).exec()
+
+            if(unlikedPost){
+                return res.json(result)
+            }
+        }  catch(err) {
+            console.log(err);
+            res.status(422).json({error: err})
+        }
     }
+
 }

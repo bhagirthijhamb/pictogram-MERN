@@ -26,7 +26,7 @@ const PostList = (props) => {
         refresh(); 
     }, [refresh]);
 
-    console.log(state.post.loading);
+    console.log(state.post.posts);
 
     const postsMarkup = !state.post.loading ? (
         state.post.posts.map(post =>{

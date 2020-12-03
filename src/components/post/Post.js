@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TextField from '@material-ui/core/TextField';
@@ -17,6 +18,10 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+// Context
+import { AppContext } from '../../context/appContext';
+import { useContext, useEffect, useCallback } from 'react';
+import {LIKE_POST} from './../../context/types';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
@@ -45,11 +50,62 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Post = (props) => {
-    console.log(props.post);
-    const { _id, text, author, imageUrl } = props.post
-    console.log(props.post);
-    console.log(text, author, imageUrl)
+    const [state, dispatch] = useContext(AppContext); 
+
+    // console.log(props.post);
+    const { _id, text, author, imageUrl, likes } = props.post
+    // console.log(props.post);
+    // console.log(text, author, imageUrl)
     const classes = useStyles();
+
+    const likePost = async(id) => {
+        try {
+            const response = await fetch('/api/posts/like', {
+                method: "put",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId: id
+                })
+            })
+            const data = await response.json();
+            console.log(data)
+            dispatch({
+                type: LIKE_POST,
+                payload: data
+            })
+            // const newData = data.map(post => {
+            //     if(post._id === data._id){
+            //         return data;
+            //     } else {
+            //         return post
+            //     }
+            // })
+
+        } catch (err){
+            console.log(err);
+        }
+    }
+
+
+    const unlikePost = async(id) => {
+        try {
+            const response = await fetch('/api/posts/unlike', {
+                method: "put",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId: id
+                })
+            })
+            const data = await response.json();
+            console.log(data)
+        } catch (err){
+            console.log(err);
+        }
+    }
     return (
          <Card className={classes.root} key={_id}>
             <CardHeader
@@ -78,8 +134,12 @@ const Post = (props) => {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                    <FavoriteBorderIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {likePost(_id)}} />
+                    {/* <FavoriteIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {unlikePost(_id)}} /> */}
                 </IconButton>
+                 <Typography variant="body2" color="textSecondary" component="p">
+                    {likes.length} likes
+                </Typography>
                 <IconButton aria-label="add to favorites">
                     <ChatIcon />
                 </IconButton>
