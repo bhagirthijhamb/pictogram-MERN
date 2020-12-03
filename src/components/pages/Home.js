@@ -26,7 +26,7 @@ const Home = (props) => {
     },[props.user])
 
     return (
-        <div className="classes root">
+        <div className="classes root container">
             {/* <Link to={`${url}/user`}>User</Link> */}
             {/* <PostList /> */}
             <Switch>

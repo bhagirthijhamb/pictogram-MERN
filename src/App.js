@@ -65,8 +65,8 @@ function App() {
       <AppContextProvider>
         <Router>
           <div className="app">
-            {user ? <Navbar /> : null}
-            <div className="container">
+            {user && <Navbar />}
+            {/* <div className="container"> */}
               <Switch>
                 {/* <Route exact path='/' component={Home} /> */}
                 <Route 
@@ -103,8 +103,8 @@ function App() {
                 />
                 <Route path='/user' component={User} />
               </Switch>
-            </div>
-            <Footer />
+            {/* </div> */}
+            {user && <Footer />}
           </div>
         </Router>
       </AppContextProvider>

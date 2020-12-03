@@ -18,7 +18,7 @@ const User = () => {
     const [state, dispatch] = useContext(AppContext); 
     console.log(state.user);
     return (
-        <div className="classes root">
+        <div className="classes root container">
             <Grid container spacing={4}>
                 <Grid item sm={2} xs={12}>
                 </Grid>
