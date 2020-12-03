@@ -4,7 +4,7 @@ const Post = require('./postModel');
 module.exports = {
     getPosts: async (req, res) => {
             try {
-                const posts = await Post.find().populate("author", "_id name");
+                const posts = await Post.find().populate("author", "_id name").populate("comments.postedBy", "_id name");
                 if(posts){
                     console.log(posts)
                     return res.status(200).json(posts)
@@ -88,6 +88,27 @@ module.exports = {
             console.log(err);
             res.status(422).json({error: err})
         }
-    }
+    },
+    commentPost: async(req, res) => {
+        const comment = {
+            text: req.body.text,
+            postedBy: req.user._id
+        }
+        try {
+            const commentedPost = await Post.findByIdAndUpdate(req.body.postId, {
+                $push:{comments: comment}
+            }, { 
+                new: true
+            }).populate("comments.postedBy", "_id name").populate("author", "_id name").exec()
+            console.log(commentedPost);
+
+            if(commentedPost){
+                return res.json(commentedPost);
+            }
+        }  catch(err) {
+            console.log(err);
+            res.status(422).json({error: err})
+        }
+    },
 
 }

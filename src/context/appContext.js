@@ -1,6 +1,6 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST } from './types';
+import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT } from './types';
 
 export const AppContext = createContext();
 
@@ -106,18 +106,33 @@ const appReducer = (state, action) => {
             }
         case LIKE_POST:
         case UNLIKE_POST: 
-            const updatedPosts = state.post.posts.map(post => {
+            const likeUpdatedPosts = state.post.posts.map(post => {
                 console.log(post, action.payload)
                 if(post._id == action.payload._id){
                     return post = action.payload;
                 } else { return post } 
             })
-            console.log(updatedPosts);
             return {
                 ...state,
                 post: {
                     ...state.post,
-                    posts: updatedPosts
+                    posts: likeUpdatedPosts
+                }
+            }
+            case SUBMIT_COMMENT:
+                console.log(state.post.posts, action.payload)
+                const commentUpdatedPosts = state.post.posts.map(post => {
+                    if(post._id == action.payload._id){
+                        console.log('found a match')
+                        return post = action.payload;
+                    } else {return post}
+                })
+                console.log(commentUpdatedPosts);
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    posts: commentUpdatedPosts
                 }
             }
         default:

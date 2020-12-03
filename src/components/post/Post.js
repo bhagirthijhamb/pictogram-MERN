@@ -20,8 +20,8 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 // Context
 import { AppContext } from '../../context/appContext';
-import { useContext, useEffect, useCallback } from 'react';
-import { LIKE_POST, UNLIKE_POST } from './../../context/types';
+import { useState, useContext, useEffect, useCallback } from 'react';
+import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST } from './../../context/types';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
@@ -47,17 +47,33 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: 'red[500]',
     },
+    comments: {
+        padding: '0px 10px',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: "center"
+    },
+    commentSection: {
+        display: "flex"
+    },
+    form: {
+        // width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
 }))
 
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
-    console.log(state.user.credentials);
+    // console.log(state.user.credentials);
     // const { user}
     // console.log(props.post);
-    const { _id, text, author, imageUrl, likes } = props.post
+    const { _id, text, author, imageUrl, likes, comments } = props.post
     // console.log(props.post);
     // console.log(text, author, imageUrl)
     const classes = useStyles();
+    const [comment, setComment] = useState('');
+
+ 
 
     const likePost = async(id) => {
         try {
@@ -71,7 +87,7 @@ const Post = (props) => {
                 })
             })
             const data = await response.json();
-            console.log(data)
+            // console.log(data)
             dispatch({
                 type: LIKE_POST,
                 payload: data
@@ -81,7 +97,6 @@ const Post = (props) => {
             console.log(err);
         }
     }
-
 
     const unlikePost = async(id) => {
         try {
@@ -101,6 +116,41 @@ const Post = (props) => {
                 payload: data
             })
         } catch (err){
+            console.log(err);
+        }
+    }
+
+    const makeComment  = async(text, postId) => {
+        try {
+            const response = await fetch('/api/posts/comment', {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId,
+                    text
+                })
+            })
+            const data = await response.json();
+            if(data){
+                console.log(data)
+                dispatch({
+                    type: SUBMIT_COMMENT,
+                    payload: data
+                })
+                setComment('')
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+    const handleSubmit = async(e) => {
+        try {
+            e.preventDefault();
+            console.log(comment);
+            makeComment(comment, _id);
+        } catch(err){
             console.log(err);
         }
     }
@@ -156,17 +206,39 @@ const Post = (props) => {
                     <ExpandMoreIcon />
                 </IconButton>
             </CardActions>
-            <TextField
-                variant="outlined"
-                // required
-                fullWidth
-                id="comment"
-                label="Add a comment... "
-                name="name"
-                autoComplete="lname"
-                // value={name}
-                // onChange={(e) => setName(e.target.value)}
-              />
+            {
+                comments.map(record => {
+                    return (
+                        <div className={classes.comments} key={record._id}>
+                            <Typography variant="h6" color="secondary">{record.postedBy.name}</Typography>
+                            <Typography variant="body1" style={{ marginLeft: 6, paddingTop: 4 }}>{record.text}</Typography>
+                        </div>
+                    )
+                })
+            }
+          <form className={classes.form} onSubmit={handleSubmit} noValidate>
+            <div className={classes.commentSection}>
+                <TextField
+                    variant="outlined"
+                    fullWidth
+                    id="comment"
+                    label="Add a comment... "
+                    name="name"
+                    autoComplete="lname"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    //   className={classes.submit}
+                    >
+                    Submit
+                </Button>
+            </div>
+        </form>
+            
         </Card>
     )
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getPosts, createPost, getMyPosts, likePost, unlikePost }  = require('./postController');
+const { getPosts, createPost, getMyPosts, likePost, unlikePost, commentPost }  = require('./postController');
 const { verifyToken } =  require('./../utils/auth');
 
 
@@ -12,5 +12,6 @@ router.use(verifyToken).route('/').post(createPost);
 router.use(verifyToken).route('/myPosts').get(getMyPosts);
 router.use(verifyToken).route('/like').put(likePost);
 router.use(verifyToken).route('/unlike').put(unlikePost);
+router.use(verifyToken).route('/comment').put(commentPost);
 
 module.exports = router;
