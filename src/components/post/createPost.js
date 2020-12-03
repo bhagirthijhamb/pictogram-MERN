@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { useHistory } from "react-router-dom";
 // MUI stuff
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +11,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 //
 import CloseIcon from '@material-ui/icons/Close';
-import { SET_ERRORS, LOADING_UI, POST_POST, CLEAR_ERRORS } from '../../context/types';
+import { SET_ERRORS, LOADING_UI, POST_POST, CLEAR_ERRORS, LOADING_DATA } from '../../context/types';
 import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
 
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 const CreatePost = () => {
+    let history = useHistory();
     const classes = useStyles();
     const [state, dispatch] = useContext(AppContext); 
     const [ open, setOpen ] = useState(false);
@@ -93,6 +95,7 @@ const CreatePost = () => {
                         type: POST_POST,
                         payload: data
                     })
+                    history.push('/');
                 }
             } catch(err){
                 console.log(err)

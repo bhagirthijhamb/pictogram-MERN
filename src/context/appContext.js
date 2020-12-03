@@ -99,6 +99,9 @@ const appReducer = (state, action) => {
                         action.payload,
                         ...state.post.posts
                     ]
+                },
+                ui: {
+                    loading: false,
                 }
             }
         default:

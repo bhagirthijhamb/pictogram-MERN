@@ -21,19 +21,20 @@ module.exports = {
                 if(text.trim() === "" || !imageUrl){
                     return res.status(400).json({ message: "Must not be empty" });
                 }
+                console.log(req.body);
                 console.log(req.user);
                 console.log('in bac-end', text);
                 req.user.password = undefined;
                 const postData = new Post({
                     text,
                     imageUrl,
-                    author: req.user 
+                    author: req.user
                 })
                 try {
                     const newPost = new Post(postData);
                     const post = await newPost.save();
                     if(post){
-                        return res.status(200).json({ id: post._id, post, message: "Post created successfully"})
+                        return res.status(200).json(post)
                     }
                 } catch(err){
                     console.log(err);

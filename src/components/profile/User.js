@@ -38,7 +38,6 @@ const useStyles = makeStyles(theme => ({
 const User = () => {
     const classes = useStyles();
     const [state, dispatch] = useContext(AppContext); 
-    console.log(state.user);
 
     const getUser = useCallback(async function() {
         try {
@@ -51,7 +50,6 @@ const User = () => {
         if(!response.ok){
             throw new Error(json.message);
         }
-        console.log(json.data)
         dispatch({
             type: SET_USER,
             payload: json.data
@@ -72,7 +70,6 @@ const User = () => {
         if(!response.ok){
             throw new Error(json.message);
         }
-        console.log(json)
         dispatch({
             type: SET_USER_POSTS,
             payload: json

@@ -45,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Post = (props) => {
+    console.log(props.post);
     const { _id, text, author, imageUrl } = props.post
+    console.log(props.post);
     console.log(text, author, imageUrl)
     const classes = useStyles();
     return (
