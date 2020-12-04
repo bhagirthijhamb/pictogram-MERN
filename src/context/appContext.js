@@ -1,6 +1,6 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST } from './types';
+import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST, DELETE_COMMENT } from './types';
 
 export const AppContext = createContext();
 
@@ -26,7 +26,7 @@ const initialState = {
 const appReducer = (state, action) => {
     switch (action.type) {
         case SET_USER:
-            console.log(action.payload)
+            // console.log(action.payload)
             return {
                 ...state,
                 user: {
@@ -138,6 +138,19 @@ const appReducer = (state, action) => {
                 }
             }
         case DELETE_COMMENT:
+            console.log(action.payload)
+            const commentDeleteUpdatedPosts = state.post.posts.map(post => {
+                if(post._id == action.payload._id){
+                    return post = action.payload;
+                } else { return post}
+            })
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    posts: commentDeleteUpdatedPosts
+                }
+            }
         default:
             return state
     }

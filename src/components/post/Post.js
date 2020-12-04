@@ -22,7 +22,7 @@ import { Button } from '@material-ui/core';
 // Context
 import { AppContext } from '../../context/appContext';
 import { useState, useContext, useEffect, useCallback } from 'react';
-import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST, DELETE_POST } from './../../context/types';
+import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST, DELETE_POST, DELETE_COMMENT } from './../../context/types';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
     const { _id, text, author, imageUrl, likes, comments } = props.post
+    console.log(comments)
     const classes = useStyles();
     const [comment, setComment] = useState('');
 
@@ -159,6 +160,27 @@ const Post = (props) => {
             console.log(err)
         }
     }
+    const deleteComment = async (postId, commentId) => {
+        console.log(postId, commentId);
+        try {
+            const response = await fetch(`/api/posts/deleteComment/${postId}/${commentId}`, {
+                method: 'delete',
+                headers: {
+                    credentials: 'include',
+                }
+            })
+            const result = await response.json();
+            console.log(result);
+            if(result){
+                dispatch({
+                    type: DELETE_COMMENT,
+                    payload: result
+                })
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const handleSubmit = async(e) => {
         try {
             e.preventDefault();
@@ -224,10 +246,16 @@ const Post = (props) => {
             </CardActions>
             {
                 comments.map(record => {
+                    console.log(record.postedBy._id, state.user.credentials._id);
                     return (
                         <div className={classes.comments} key={record._id}>
                             <Typography variant="h6" color="secondary">{record.postedBy.name}</Typography>
                             <Typography variant="body1" style={{ marginLeft: 6, paddingTop: 4 }}>{record.text}</Typography>
+                            {record.postedBy._id == state.user.credentials._id && 
+                                <IconButton aria-label="settings">
+                                    <DeleteOutlineIcon onClick={() => deleteComment(_id, record._id)} />
+                                </IconButton>
+                            }
                         </div>
                     )
                 })

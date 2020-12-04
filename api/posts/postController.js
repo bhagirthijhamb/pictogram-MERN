@@ -125,10 +125,10 @@ module.exports = {
     },
     deleteComment: async(req, res) => {
         try {
-            console.log(req.params)
-            const commentToDelete = await Post.findByIdAndUpdate(req.params.postid, 
+            console.log('req.params', req.params)
+            const commentToDelete = await Post.findByIdAndUpdate(req.params.postId, 
                 {
-                    $pull: {comment: { _id: req.params.commnt_id }}
+                    $pull: {comments: { _id: req.params.commentId }}
                 },
                 {
                     new: true
