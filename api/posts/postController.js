@@ -1,5 +1,6 @@
 const { verifyToken } = require('../utils/tokenService');
 const Post = require('./postModel');
+const { post } = require('./postRoutes');
 
 module.exports = {
     getPosts: async (req, res) => {
@@ -62,7 +63,7 @@ module.exports = {
                 $push:{likes: req.user._id}
             }, { 
                 new: true
-            }).exec()
+            }).populate("author", "_id name").exec()
             // console.log('likedPost', likedPost);
 
             if(likedPost){
@@ -79,7 +80,7 @@ module.exports = {
                 $pull:{likes: req.user._id}
             }, { 
                 new: true
-            }).exec()
+            }).populate("author", "_id name").exec()
 
             if(unlikedPost){
                 return res.json(unlikedPost)
@@ -110,5 +111,20 @@ module.exports = {
             res.status(422).json({error: err})
         }
     },
-
+    deletePost: async(req, res) => {
+        try {
+            const postToDelete = await Post.findOne({ _id: req.params.postId}).populate("author", "_id").exec()
+            if(!postToDelete) {
+                res.status(422).json({ error: err });
+            }
+            if(postToDelete.author._id.toString() === req.user._id.toString()) {
+                const result  = await postToDelete.remove();
+                if(result){
+                    res.json({ message: "Deleted successfully"})
+                }       
+            }
+        }catch (err) {
+            console.log(err);
+        }
+    }
 }

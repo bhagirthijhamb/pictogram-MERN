@@ -16,7 +16,7 @@ const findUserById = async (id) => {
     try {
         const user = await User.findById(id);
         return {
-            id: user._id,
+            _id: user._id,
             name: user.name,
             email: user.email
         }

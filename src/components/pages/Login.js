@@ -79,7 +79,7 @@ export default function Login(props) {
             body: JSON.stringify({ email, password })
         })
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
         if(!response.ok){
           // throw new Error(data)
           dispatch({
@@ -91,9 +91,7 @@ export default function Login(props) {
           type: SET_USER,
           payload: data
         })
-        // if(response.ok){
-        //   history.push('/');
-        // }
+        props.getUser();
     } catch(err){
         console.log(err)
         dispatch({

@@ -14,6 +14,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TextField from '@material-ui/core/TextField';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import Input from '@material-ui/core/Input';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -64,12 +65,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
-    // console.log(state.user.credentials);
+    console.log(state.user.credentials);
     // const { user}
     // console.log(props.post);
     const { _id, text, author, imageUrl, likes, comments } = props.post
     // console.log(props.post);
-    // console.log(text, author, imageUrl)
+    console.log(text, author, imageUrl)
     const classes = useStyles();
     const [comment, setComment] = useState('');
 
@@ -145,6 +146,22 @@ const Post = (props) => {
             console.log(err);
         }
     }
+    const deletePost = async (postId) => {
+        try {
+            const response = await fetch(`/api/posts//deletePost/${postId}`, {
+                method: 'delete',
+                headers: {
+                    credentials: 'include',
+                }
+            })
+            const result = response.json();
+            if(result){
+                console.log(result);
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const handleSubmit = async(e) => {
         try {
             e.preventDefault();
@@ -162,11 +179,13 @@ const Post = (props) => {
                     R
                 </Avatar>
                 }
-                action={
-                <IconButton aria-label="settings">
-                    <MoreHorizIcon />
-                </IconButton>
-                }
+                action=
+                    {author._id == state.user.credentials._id && 
+                         <IconButton aria-label="settings">
+                            <DeleteOutlineIcon />
+                        </IconButton>
+                    }
+                
                 title={author.name}
                 // subheader="September 14, 2016"
             />
@@ -181,7 +200,7 @@ const Post = (props) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                {likes.includes(state.user.credentials.id)
+                {likes.includes(state.user.credentials._id)
                 ? <IconButton aria-label="add to favorites">
                     <FavoriteIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {unlikePost(_id)}} />
                   </IconButton>
