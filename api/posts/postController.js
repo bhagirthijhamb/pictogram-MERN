@@ -125,7 +125,7 @@ module.exports = {
     },
     deleteComment: async(req, res) => {
         try {
-            console.log('req.params', req.params)
+            // console.log('req.params', req.params)
             const commentToDelete = await Post.findByIdAndUpdate(req.params.postId, 
                 {
                     $pull: {comments: { _id: req.params.commentId }}
@@ -135,7 +135,7 @@ module.exports = {
                 }).populate("comments.postedBy", "_id name")
                 .populate("author", "_id name")
                 .exec()
-            console.log(commentToDelete);
+            // console.log(commentToDelete);
             if(commentToDelete){
                 return res.json(commentToDelete)
             }

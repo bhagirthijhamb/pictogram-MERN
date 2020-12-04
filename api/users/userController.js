@@ -93,7 +93,6 @@ module.exports =  {
     },
     getMyDetails: async(req, res) => {
         try {
-            // console.log('from /me route', req.user);
             const user = await findUserById(req.user.id);
             if(user){
                 res.json({ data: user });
@@ -107,16 +106,13 @@ module.exports =  {
         console.log(req.params.userId)
         try {
             const user = await User.findOne({ _id: req.params.userId}).select("-password");
-
-            console.log(user)
             if(user){
                 const userPosts = await Post.find({ author: req.params.userId }).populate("author", "_id name").exec();
-                console.log(userPosts)
-                res.status(200).json({user, userPosts})
-                // if(userPosts){
-                // }
+                if(userPosts){
+                    console.log('user',user,'userPosts', userPosts)
+                    res.status(200).json({user, userPosts})
+                }
             }
-            // res.json({user, posts})
         } catch(err) {
             res.status(404).json({ error: err })
         }
