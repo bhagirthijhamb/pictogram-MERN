@@ -79,6 +79,7 @@ const CreatePost = () => {
                     },
                     body: JSON.stringify({ text, imageUrl })
                 })
+                setText('')
                 const data = await response.json();
                 console.log(data)
                 

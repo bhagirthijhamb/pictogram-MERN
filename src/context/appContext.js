@@ -1,6 +1,6 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT } from './types';
+import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST } from './types';
 
 export const AppContext = createContext();
 
@@ -90,7 +90,7 @@ const appReducer = (state, action) => {
                 }
             }
         case POST_POST:
-            console.log('inside post-post')
+            // console.log('inside post-post')
             return {
                 ...state,
                 post: {
@@ -107,7 +107,7 @@ const appReducer = (state, action) => {
         case LIKE_POST:
         case UNLIKE_POST: 
             const likeUpdatedPosts = state.post.posts.map(post => {
-                console.log(post, action.payload)
+                // console.log(post, action.payload)
                 if(post._id == action.payload._id){
                     return post = action.payload;
                 } else { return post } 
@@ -119,15 +119,15 @@ const appReducer = (state, action) => {
                     posts: likeUpdatedPosts
                 }
             }
-            case SUBMIT_COMMENT:
-                console.log(state.post.posts, action.payload)
-                const commentUpdatedPosts = state.post.posts.map(post => {
-                    if(post._id == action.payload._id){
-                        console.log('found a match')
-                        return post = action.payload;
-                    } else {return post}
-                })
-                console.log(commentUpdatedPosts);
+        case SUBMIT_COMMENT:
+            // console.log(state.post.posts, action.payload)
+            const commentUpdatedPosts = state.post.posts.map(post => {
+                if(post._id == action.payload._id){
+                    // console.log('found a match')
+                    return post = action.payload;
+                } else {return post}
+            })
+            // console.log(commentUpdatedPosts);
             return {
                 ...state,
                 post: {
@@ -135,6 +135,18 @@ const appReducer = (state, action) => {
                     posts: commentUpdatedPosts
                 }
             }
+        case DELETE_POST: 
+        // console.log(action.payload)
+            const deleteUpdatedPosts = state.post.posts.filter(post => post._id !== action.payload._id) 
+            // console.log( 'deleteUpdatedposts', deleteUpdatedPosts);
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    posts: deleteUpdatedPosts
+                }
+            }
+
         default:
             return state
     }

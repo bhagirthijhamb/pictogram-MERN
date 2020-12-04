@@ -22,7 +22,7 @@ import { Button } from '@material-ui/core';
 // Context
 import { AppContext } from '../../context/appContext';
 import { useState, useContext, useEffect, useCallback } from 'react';
-import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST } from './../../context/types';
+import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST, DELETE_POST } from './../../context/types';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
@@ -69,7 +69,7 @@ const Post = (props) => {
     // const { user}
     // console.log(props.post);
     const { _id, text, author, imageUrl, likes, comments } = props.post
-    // console.log(props.post);
+    console.log(author._id, state.user.credentials._id);
     console.log(text, author, imageUrl)
     const classes = useStyles();
     const [comment, setComment] = useState('');
@@ -148,15 +148,19 @@ const Post = (props) => {
     }
     const deletePost = async (postId) => {
         try {
-            const response = await fetch(`/api/posts//deletePost/${postId}`, {
+            const response = await fetch(`/api/posts/deletePost/${postId}`, {
                 method: 'delete',
                 headers: {
                     credentials: 'include',
                 }
             })
-            const result = response.json();
+            const result = await response.json();
+            console.log(result);
             if(result){
-                console.log(result);
+                dispatch({
+                    type: DELETE_POST,
+                    payload: result
+                })
             }
         } catch (err) {
             console.log(err)
@@ -182,7 +186,7 @@ const Post = (props) => {
                 action=
                     {author._id == state.user.credentials._id && 
                          <IconButton aria-label="settings">
-                            <DeleteOutlineIcon />
+                            <DeleteOutlineIcon onClick={() => {deletePost(_id)}} />
                         </IconButton>
                     }
                 

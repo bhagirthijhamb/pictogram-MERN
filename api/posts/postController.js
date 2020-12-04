@@ -113,14 +113,18 @@ module.exports = {
     },
     deletePost: async(req, res) => {
         try {
-            const postToDelete = await Post.findOne({ _id: req.params.postId}).populate("author", "_id").exec()
+            
+            console.log(req.params)
+            console.log(req.params.postid)
+            const postToDelete = await Post.findOne({ _id: req.params.postid}).populate("author", "_id").exec()
+            console.log(postToDelete);
             if(!postToDelete) {
-                res.status(422).json({ error: err });
+                res.status(422).json({ error: 'post not found' });
             }
             if(postToDelete.author._id.toString() === req.user._id.toString()) {
                 const result  = await postToDelete.remove();
                 if(result){
-                    res.json({ message: "Deleted successfully"})
+                    res.json(result)
                 }       
             }
         }catch (err) {
