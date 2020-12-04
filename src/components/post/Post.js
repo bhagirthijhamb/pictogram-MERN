@@ -192,22 +192,41 @@ const Post = (props) => {
     }
     return (
          <Card className={classes.root} key={_id}>
-            <CardHeader
+            {/* <CardHeader
                 avatar={
                 <Avatar aria-label="recipe" className={classes.avatar}>
                     R
                 </Avatar>
                 }
+
                 action=
                     {author._id == state.user.credentials._id && 
-                         <IconButton aria-label="settings">
+                        <IconButton aria-label="settings">
                             <DeleteOutlineIcon onClick={() => {deletePost(_id)}} />
                         </IconButton>
                     }
+
                 
                 title={author.name}
+                // title={Typography}
+                
                 // subheader="September 14, 2016"
-            />
+            /> */}
+            <CardActions>
+                <Avatar aria-label="recipe" className={classes.avatar}>
+                    R
+                </Avatar>
+                <Typography className={classes.root}>
+                    <Link href="#">
+                        {author.name}
+                    </Link>
+                </Typography>
+                {author._id == state.user.credentials._id && 
+                    <IconButton aria-label="settings">
+                        <DeleteOutlineIcon onClick={() => {deletePost(_id)}} />
+                    </IconButton>
+                }
+            </CardActions>
             <CardMedia
                 className={classes.media}
                 image={imageUrl}

@@ -41,7 +41,7 @@ const OtherUser = () => {
     const [state, dispatch] = useContext(AppContext); 
     const [otherUser, setOtherUser] = useState(null)
     const { userId } = useParams();
-    console.log(userId);
+    // console.log(userId);
 
     const getUser = useCallback(async function() {
         try {
@@ -51,7 +51,7 @@ const OtherUser = () => {
                 },
             })
             const otherUserDetails = await response.json();
-            console.log(otherUserDetails)
+            // console.log(otherUserDetails)
             if(!response.ok){
                 throw new Error(otherUserDetails.message);
             }
@@ -64,13 +64,6 @@ const OtherUser = () => {
   useEffect(() => {
     getUser();
   }, [getUser])
-
-  
-    console.log(otherUser)
-    // console.log(otherUser.user)
-    // console.log(otherUser.userPosts)
-
-        // const { user, userPosts } = otherUser ;
 
     return (
         <div className="classes root container">
