@@ -45,8 +45,6 @@ const appReducer = (state, action) => {
                 }
             }
         case LOADING_DATA: 
-        // console.log('setting LOADING_DATA to true')
-        // console.log({...state.posts})
             return {
                 ...state,
                 post: {
@@ -90,7 +88,6 @@ const appReducer = (state, action) => {
                 }
             }
         case POST_POST:
-            // console.log('inside post-post')
             return {
                 ...state,
                 post: {
@@ -107,7 +104,6 @@ const appReducer = (state, action) => {
         case LIKE_POST:
         case UNLIKE_POST: 
             const likeUpdatedPosts = state.post.posts.map(post => {
-                // console.log(post, action.payload)
                 if(post._id == action.payload._id){
                     return post = action.payload;
                 } else { return post } 
@@ -120,14 +116,11 @@ const appReducer = (state, action) => {
                 }
             }
         case SUBMIT_COMMENT:
-            // console.log(state.post.posts, action.payload)
             const commentUpdatedPosts = state.post.posts.map(post => {
                 if(post._id == action.payload._id){
-                    // console.log('found a match')
                     return post = action.payload;
                 } else {return post}
             })
-            // console.log(commentUpdatedPosts);
             return {
                 ...state,
                 post: {
@@ -136,9 +129,7 @@ const appReducer = (state, action) => {
                 }
             }
         case DELETE_POST: 
-        // console.log(action.payload)
             const deleteUpdatedPosts = state.post.posts.filter(post => post._id !== action.payload._id) 
-            // console.log( 'deleteUpdatedposts', deleteUpdatedPosts);
             return {
                 ...state,
                 post: {
@@ -146,7 +137,7 @@ const appReducer = (state, action) => {
                     posts: deleteUpdatedPosts
                 }
             }
-
+        case DELETE_COMMENT:
         default:
             return state
     }

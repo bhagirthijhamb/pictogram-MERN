@@ -7,7 +7,6 @@ module.exports = {
             try {
                 const posts = await Post.find().populate("author", "_id name").populate("comments.postedBy", "_id name");
                 if(posts){
-                    console.log(posts)
                     return res.status(200).json(posts)
                 }
             } catch (err) {
@@ -22,9 +21,6 @@ module.exports = {
                 if(text.trim() === "" || !imageUrl){
                     return res.status(400).json({ message: "Must not be empty" });
                 }
-                console.log(req.body);
-                console.log(req.user);
-                console.log('in bac-end', text);
                 req.user.password = undefined;
                 const postData = new Post({
                     text,
@@ -101,7 +97,6 @@ module.exports = {
             }, { 
                 new: true
             }).populate("comments.postedBy", "_id name").populate("author", "_id name").exec()
-            console.log(commentedPost);
 
             if(commentedPost){
                 return res.json(commentedPost);
@@ -114,10 +109,7 @@ module.exports = {
     deletePost: async(req, res) => {
         try {
             
-            console.log(req.params)
-            console.log(req.params.postid)
             const postToDelete = await Post.findOne({ _id: req.params.postid}).populate("author", "_id").exec()
-            console.log(postToDelete);
             if(!postToDelete) {
                 res.status(422).json({ error: 'post not found' });
             }
@@ -126,6 +118,26 @@ module.exports = {
                 if(result){
                     res.json(result)
                 }       
+            }
+        }catch (err) {
+            console.log(err);
+        }
+    },
+    deleteComment: async(req, res) => {
+        try {
+            console.log(req.params)
+            const commentToDelete = await Post.findByIdAndUpdate(req.params.postid, 
+                {
+                    $pull: {comment: { _id: req.params.commnt_id }}
+                },
+                {
+                    new: true
+                }).populate("comments.postedBy", "_id name")
+                .populate("author", "_id name")
+                .exec()
+            console.log(commentToDelete);
+            if(commentToDelete){
+                return res.json(commentToDelete)
             }
         }catch (err) {
             console.log(err);

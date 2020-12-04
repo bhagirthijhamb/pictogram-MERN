@@ -65,16 +65,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
-    console.log(state.user.credentials);
-    // const { user}
-    // console.log(props.post);
     const { _id, text, author, imageUrl, likes, comments } = props.post
-    console.log(author._id, state.user.credentials._id);
-    console.log(text, author, imageUrl)
     const classes = useStyles();
     const [comment, setComment] = useState('');
-
- 
 
     const likePost = async(id) => {
         try {
