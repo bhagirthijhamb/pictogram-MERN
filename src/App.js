@@ -9,6 +9,7 @@ import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 import Footer from './components/layout/Footer';
 import User from './components/profile/User';
+import OtherUser from './components/profile/OtherUser';
 import Navbar from './components/layout/Navbar';
 
 // MUI 
@@ -48,7 +49,7 @@ function App() {
       if(!response.ok){
         throw new Error(json.message);
       }
-      console.log(json)
+      // console.log(json)
       setUser(json.data);
     } catch (err) {
       setUser(undefined);
@@ -101,7 +102,8 @@ function App() {
                     return <Login getUser={getUser} {...props} />
                   }} 
                 />
-                <Route path='/user' component={User} />
+                <Route exact path='/user' component={User} />
+                <Route path='/user/:userId' component={OtherUser} />
               </Switch>
             {/* </div> */}
             {user && <Footer />}

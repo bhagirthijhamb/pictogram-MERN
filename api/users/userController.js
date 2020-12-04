@@ -1,4 +1,5 @@
 const User = require('./userModel');
+const Post = require('./../posts/postModel');
 const { validateSignupData, validateLoginData } = require('./../utils/validators');
 const { createToken }  = require('./../utils/tokenService');
 const { find } = require('./userModel');
@@ -94,10 +95,30 @@ module.exports =  {
         try {
             // console.log('from /me route', req.user);
             const user = await findUserById(req.user.id);
-            res.json({ data: user });
+            if(user){
+                res.json({ data: user });
+            }
         } catch(err) {
             console.log(err);
             res.status(500).json({ message: 'Something went wrong'})
+        }
+    },
+    getUserDetails: async(req, res) => {
+        console.log(req.params.userId)
+        try {
+            const user = await User.findOne({ _id: req.params.userId}).select("-password");
+
+            console.log(user)
+            if(user){
+                const userPosts = await Post.find({ author: req.params.userId }).populate("author", "_id name").exec();
+                console.log(userPosts)
+                res.status(200).json({user, userPosts})
+                // if(userPosts){
+                // }
+            }
+            // res.json({user, posts})
+        } catch(err) {
+            res.status(404).json({ error: err })
         }
     }
 }
