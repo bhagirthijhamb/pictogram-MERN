@@ -133,5 +133,63 @@ module.exports =  {
         } catch(err) {
             res.status(404).json({ error: err })
         }
+    },
+    followUser: async(req, res) => {
+        try {
+             const followedUser = User.findByIdAndUpdate(req.body.followId, {
+                 $push: { followers: req.user.id }
+                }, {
+                    new: true
+                }
+             )
+             if(followedUser){
+                 try {
+                     const followingUser = User.findByIdAndUpdate(req.user.id, {
+                        $push: { following: req.body.followId}
+                        }, {
+                            new: true
+                        }
+                    )
+                    if(followingUser){
+                        res.json(followingUser)
+                    }
+                 } catch(err) {
+                     console.log(err)
+                     return res.status(422).json({ error: err })
+                 }
+             }
+        } catch(err) {
+            console.log(er);
+            return res.status(422).json({ error: err })
+        }
+    },
+    unfollowUser: async(req, res) => {
+        try {
+             const followedUser = User.findByIdAndUpdate(req.body.unfollowId, {
+                 $pull: { followers: req.user.id }
+                }, {
+                    new: true
+                }
+             )
+             if(followedUser){
+                 try {
+                     const followingUser = User.findByIdAndUpdate(req.user.id, {
+                        $pull: { following: req.body.followId}
+                        }, {
+                            new: true
+                        }
+                    )
+                    if(followingUser){
+                        res.json(followingUser)
+                    }
+                 } catch(err) {
+                     console.log(err)
+                     return res.status(422).json({ error: err })
+                 }
+             }
+        } catch(err) {
+            console.log(er);
+            return res.status(422).json({ error: err })
+        }
     }
 }
