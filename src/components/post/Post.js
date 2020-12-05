@@ -30,6 +30,10 @@ import ChatIcon from '@material-ui/icons/Chat';
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 550,
+        marginBottom: 20,
+        border: '1px solid #B7D4DB',
+        boxShadow: '5px 5px #B7D4DB',
+        position: 'relative'
     },
     media: {
         height: 0,
@@ -46,7 +50,18 @@ const useStyles = makeStyles((theme) => ({
         transform: 'rotate(180deg)',
     },
     avatar: {
-        backgroundColor: 'red[500]',
+        backgroundColor: '#FF7A89',
+        fontSize: 20
+    },
+    authorName: {
+        marginLeft: '20px !important',
+        fontWeight: "bold",
+        fontSize: '1.3rem',
+        // color: '#CC616E'
+    },
+    postDelete: {
+        position: "absolute",
+        right: '10px'
     },
     comments: {
         padding: '0px 10px',
@@ -66,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
     const { _id, text, author, imageUrl, likes, comments } = props.post
-    console.log(comments)
+    console.log(state.user)
     const classes = useStyles();
     const [comment, setComment] = useState('');
 
@@ -192,38 +207,17 @@ const Post = (props) => {
     }
     return (
          <Card className={classes.root} key={_id}>
-            {/* <CardHeader
-                avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
-                </Avatar>
-                }
-
-                action=
-                    {author._id == state.user.credentials._id && 
-                        <IconButton aria-label="settings">
-                            <DeleteOutlineIcon onClick={() => {deletePost(_id)}} />
-                        </IconButton>
-                    }
-
-                
-                title={author.name}
-                // title={Typography}
-                
-                // subheader="September 14, 2016"
-            /> */}
             <CardActions>
                 <Avatar aria-label="recipe" className={classes.avatar}>
                     R
                 </Avatar>
-                <Typography className={classes.root}>
-                    <Link href="#">
+                <Typography className={classes.authorName} component={Link} to={author._id !== state.user.credentials._id ? `/user/${author._id}` : `/user` }>
+                {/* <Typography className={classes.root} component={Link} to={`/user/${author._id}` }> */}
                         {author.name}
-                    </Link>
                 </Typography>
                 {author._id == state.user.credentials._id && 
-                    <IconButton aria-label="settings">
-                        <DeleteOutlineIcon onClick={() => {deletePost(_id)}} />
+                    <IconButton aria-label="settings" className={classes.postDelete}>
+                        <DeleteOutlineIcon  onClick={() => {deletePost(_id)}} />
                     </IconButton>
                 }
             </CardActions>

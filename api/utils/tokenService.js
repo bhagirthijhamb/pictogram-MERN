@@ -12,6 +12,7 @@ exports.verifyToken = async(token) => {
         if(err){
             throw err;
         } 
+        // console.log('payload', payload);
         user = payload;
         // console.log(user);
     })

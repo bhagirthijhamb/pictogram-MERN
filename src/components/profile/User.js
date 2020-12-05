@@ -39,53 +39,84 @@ const User = () => {
     const classes = useStyles();
     const [state, dispatch] = useContext(AppContext); 
 
-    const getUser = useCallback(async function() {
+//     const getUser = useCallback(async function() {
+//         try {
+//         const response = await fetch('/api/users/me', {
+//             headers: {
+//                 credentials: 'include',
+//             },
+//         })
+//         const json = await response.json();
+//         if(!response.ok){
+//             throw new Error(json.message);
+//         }
+//         dispatch({
+//             type: SET_USER,
+//             payload: json.data
+//         })
+//         } catch (err) {
+//             console.log({ err });
+//         }
+//     }, [])
+
+//     const getPosts = useCallback(async function() {
+//         try {
+//         const response = await fetch('/api/posts/myPosts', {
+//             headers: {
+//                 credentials: 'include',
+//             },
+//         })
+//         const json = await response.json();
+//         if(!response.ok){
+//             throw new Error(json.message);
+//         }
+//         dispatch({
+//             type: SET_USER_POSTS,
+//             payload: json
+//         })
+//         } catch (err) {
+//             console.log({ err });
+//         }
+//     }, [])
+
+//   useEffect(() => {
+//     getUser();
+//     getPosts();
+//   }, [getUser, getPosts])
+
+    const getMyProfile = useCallback(async function() {
         try {
-        const response = await fetch('/api/users/me', {
+        const response = await fetch('/api/users/user', {
             headers: {
                 credentials: 'include',
             },
         })
         const json = await response.json();
+        console.log(json.user);
+        console.log(json.userPosts);
         if(!response.ok){
             throw new Error(json.message);
         }
         dispatch({
             type: SET_USER,
-            payload: json.data
+            payload: json.user
         })
-        } catch (err) {
-            console.log({ err });
-        }
-    }, [])
-
-    const getPosts = useCallback(async function() {
-        try {
-        const response = await fetch('/api/posts/myPosts', {
-            headers: {
-            credentials: 'include',
-            },
-        })
-        const json = await response.json();
-        if(!response.ok){
-            throw new Error(json.message);
-        }
         dispatch({
             type: SET_USER_POSTS,
-            payload: json
+            payload: json.userPosts
         })
         } catch (err) {
             console.log({ err });
         }
     }, [])
 
-  useEffect(() => {
-    getUser();
-    getPosts();
-  }, [getUser, getPosts])
+    useEffect(() => {
+        getMyProfile();
+    }, [getMyProfile])
+
 
   const { credentials: {name, email}, myPosts } = state.user;
-  console.log(name, email, myPosts)
+//   console.log(name, email, myPosts)
 
     return (
         <div className="classes root container">

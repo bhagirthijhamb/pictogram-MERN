@@ -102,14 +102,31 @@ module.exports =  {
             res.status(500).json({ message: 'Something went wrong'})
         }
     },
+    getMyProfile: async(req, res) => {
+        // console.log('req.user.id', req.user.id);
+        try {
+            const user = await User.findOne({ _id: req.user.id }).select("-password");
+            // console.log(user);
+            if(user) {
+                // console.log(user.name)
+                const userPosts = await Post.find({ author: user._id }).populate("author", "_id name").exec();
+                if(userPosts){
+                    // console.log(user, userPosts)
+                    res.status(200).json({ user, userPosts });
+                }
+            }
+        } catch (err) {
+            res.status(404).json({ error: err })
+        }
+    },
     getUserDetails: async(req, res) => {
-        console.log(req.params.userId)
+        // console.log(req.params.userId)
         try {
             const user = await User.findOne({ _id: req.params.userId}).select("-password");
             if(user){
                 const userPosts = await Post.find({ author: req.params.userId }).populate("author", "_id name").exec();
                 if(userPosts){
-                    console.log('user',user,'userPosts', userPosts)
+                    // console.log('user',user,'userPosts', user)
                     res.status(200).json({user, userPosts})
                 }
             }
