@@ -135,23 +135,26 @@ module.exports =  {
         }
     },
     followUser: async(req, res) => {
+        console.log(req.user.id, req.body.followId)
         try {
-             const followedUser = User.findByIdAndUpdate(req.body.followId, {
+             const followedUser = await User.findByIdAndUpdate(req.body.followId, {
                  $push: { followers: req.user.id }
                 }, {
                     new: true
                 }
              )
              if(followedUser){
+                 console.log('followedUser', followedUser);
                  try {
-                     const followingUser = User.findByIdAndUpdate(req.user.id, {
-                        $push: { following: req.body.followId}
+                     const followingUser = await User.findByIdAndUpdate(req.user.id, {
+                         $push: { following: req.body.followId}
                         }, {
                             new: true
                         }
-                    )
-                    if(followingUser){
-                        res.json(followingUser)
+                        )
+                        if(followingUser){
+                            console.log('followingUser', followingUser);
+                        res.json({followedUser, followingUser})
                     }
                  } catch(err) {
                      console.log(err)

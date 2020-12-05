@@ -4,6 +4,8 @@ import { useState, useContext, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+
 import { SET_USER, SET_USER_POSTS } from './../../context/types';
 
 
@@ -61,9 +63,29 @@ const OtherUser = () => {
         }
     }, [])
 
-  useEffect(() => {
-    getUser();
-  }, [getUser])
+    const followUser = async() => {
+        try {
+            const response = await fetch('/api/users/user/follow', {
+                method: "put",
+                headers: {
+                    credentials: 'include',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ followId: userId })
+            })
+            const json = await response.json()
+            console.log(json);
+            if(!response.ok){
+                throw new Error(json.error) 
+            }
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        getUser();
+    }, [getUser])
 
     return (
         <div className="classes root container">
@@ -85,6 +107,15 @@ const OtherUser = () => {
                                 <Typography variant="h6">50 followers</Typography>
                                 <Typography variant="h6">40 following</Typography>
                             </div>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                //   className={classes.submit}
+                                onClick={() => followUser()}
+                                >
+                                Follow
+                            </Button>
                         </div>
                     </div>
                     <div className={classes.profilePageBottom}>
