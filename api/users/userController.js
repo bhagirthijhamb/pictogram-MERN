@@ -135,55 +135,55 @@ module.exports =  {
         }
     },
     followUser: async(req, res) => {
-        console.log(req.user.id, req.body.followId)
         try {
-             const followedUser = await User.findByIdAndUpdate(req.body.followId, {
-                 $push: { followers: req.user.id }
-                }, {
-                    new: true
-                }
-             )
-             if(followedUser){
-                 console.log('followedUser', followedUser);
-                 try {
-                     const followingUser = await User.findByIdAndUpdate(req.user.id, {
-                         $push: { following: req.body.followId}
-                        }, {
-                            new: true
-                        }
-                        )
-                        if(followingUser){
-                            console.log('followingUser', followingUser);
+            const followedUser = await User.findByIdAndUpdate(req.body.followId, {
+                $push: { followers: req.user.id }
+            }, {
+                new: true
+            }
+            )
+            if(followedUser){
+                try {
+                    const followingUser = await User.findByIdAndUpdate(req.user.id, {
+                        $push: { following: req.body.followId}
+                    }, {
+                        new: true
+                    }
+                    ).select("-password")
+                    if(followingUser){
                         res.json({followedUser, followingUser})
                     }
-                 } catch(err) {
-                     console.log(err)
-                     return res.status(422).json({ error: err })
-                 }
-             }
+                } catch(err) {
+                    console.log(err)
+                    return res.status(422).json({ error: err })
+                }
+            }
         } catch(err) {
             console.log(er);
             return res.status(422).json({ error: err })
         }
     },
     unfollowUser: async(req, res) => {
-        try {
-             const followedUser = User.findByIdAndUpdate(req.body.unfollowId, {
-                 $pull: { followers: req.user.id }
+        console.log(req.user.id, req.body.followId)
+            try {
+                const followedUser = User.findByIdAndUpdate(req.body.unfollowId, {
+                    $pull: { followers: req.user.id }
                 }, {
                     new: true
                 }
-             )
-             if(followedUser){
-                 try {
-                     const followingUser = User.findByIdAndUpdate(req.user.id, {
-                        $pull: { following: req.body.followId}
+                ).select("-password")
+                if(followedUser){
+                    console.log('followedUser', followedUser);
+                    try {
+                        const followingUser = User.findByIdAndUpdate(req.user.id, {
+                            $pull: { following: req.body.followId}
                         }, {
                             new: true
                         }
-                    )
-                    if(followingUser){
-                        res.json(followingUser)
+                        )
+                        if(followingUser){
+                            console.log('followingUser', followingUser);
+                            res.json(followingUser)
                     }
                  } catch(err) {
                      console.log(err)

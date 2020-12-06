@@ -87,6 +87,10 @@ const OtherUser = () => {
         getUser();
     }, [getUser])
 
+    console.log('otherUser', otherUser)
+    // console.log(otherUser.user.followers.length)
+    // console.log(otherUser.user.following.length)
+
     return (
         <div className="classes root container">
             <Grid container spacing={4}>
@@ -103,9 +107,9 @@ const OtherUser = () => {
                         <div className={classes.profileDetails}>
                             <Typography variant="h4">{otherUser.user.name}</Typography>
                             <div className={classes.profileDetailsNumbers}>
-                                <Typography variant="h6">20 posts</Typography>
-                                <Typography variant="h6">50 followers</Typography>
-                                <Typography variant="h6">40 following</Typography>
+                                <Typography variant="h6">{otherUser && otherUser.userPosts.length} posts</Typography>
+                                <Typography variant="h6">{otherUser && otherUser.user.followers.length} followers</Typography>
+                                <Typography variant="h6">{otherUser && otherUser.user.following.length} following</Typography>
                             </div>
                             <Button
                                 type="submit"

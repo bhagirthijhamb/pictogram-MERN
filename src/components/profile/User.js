@@ -69,8 +69,8 @@ const User = () => {
         getMyProfile();
     }, [getMyProfile])
 
-  const { credentials: {name, email}, myPosts } = state.user;
-//   console.log(name, email, myPosts)
+  const { credentials: {name, email, followers, following}, myPosts } = state.user;
+  console.log(followers, following)
 
     return (
         <div className="classes root container">
@@ -85,9 +85,9 @@ const User = () => {
                         <div className={classes.profileDetails}>
                             <Typography variant="h4">{name}</Typography>
                             <div className={classes.profileDetailsNumbers}>
-                                <Typography variant="h6">20 posts</Typography>
-                                <Typography variant="h6">50 followers</Typography>
-                                <Typography variant="h6">40 following</Typography>
+                                <Typography variant="h6">{myPosts && myPosts.length} posts</Typography>
+                                <Typography variant="h6">{followers && followers.length} followers</Typography>
+                                <Typography variant="h6">{following && following.length} following</Typography>
                             </div>
                         </div>
                     </div>
