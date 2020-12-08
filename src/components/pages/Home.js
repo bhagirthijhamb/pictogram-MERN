@@ -17,7 +17,7 @@ import NavBar from '../layout/Navbar';
 
 const Home = (props) => {
     let { path, url } = useRouteMatch();
-    console.log(path, url)
+    // console.log(path, url)
 
     const [state, dispatch] = useContext(AppContext); 
     
@@ -25,7 +25,7 @@ const Home = (props) => {
         dispatch({ type: SET_USER, payload: props.user })
     },[props.user])
 
-    console.log(state.user);
+    // console.log(state.user);
 
     return (
         <div className="classes root container">

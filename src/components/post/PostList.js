@@ -14,7 +14,7 @@ const PostList = (props) => {
         try {
             const response = await fetch('/api/posts');
             const postRes = await response.json();
-            console.log(postRes);
+            // console.log(postRes);
             dispatch({ type: SET_POSTS, payload: postRes })
         } catch(err) {
             console.log(err)
@@ -26,7 +26,7 @@ const PostList = (props) => {
         refresh(); 
     }, [refresh]);
 
-    console.log(state.post.posts);
+    // console.log(state.post.posts);
 
     const postsMarkup = !state.post.loading ? (
         state.post.posts.map(post =>{

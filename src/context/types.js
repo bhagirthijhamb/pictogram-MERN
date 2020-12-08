@@ -5,6 +5,8 @@ export const SET_USER = 'SET_USER';
 export const SET_USER_POSTS = 'SET_USER_POSTS';
 export const LOADING_USER = 'LOADING_USER';
 export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
+export const SET_OTHER_USER = 'SET_OTHER_USER';
+export const FOLLOW_USER = 'FOLLOW_USER';
 
 // UI types
 export const SET_ERRORS = 'SET_ERRORS';

@@ -81,7 +81,7 @@ const CreatePost = () => {
                 })
                 setText('')
                 const data = await response.json();
-                console.log(data)
+                // console.log(data)
                 
                 // dispatch(clearErrors())
                 if(!response.ok) {
@@ -99,7 +99,7 @@ const CreatePost = () => {
                     history.push('/');
                 }
             } catch(err){
-                console.log(err)
+                // console.log(err)
                 dispatch({
                     type: SET_ERRORS,
                     payload: err
@@ -139,12 +139,13 @@ const CreatePost = () => {
                             Upload
                             </Button>
                         </label>
-                        <Button type="submit" variant="contained" color="primary" disabled={state.ui.loading} 
+                        <Button type="submit" variant="contained" color="primary" 
+                        // disabled={state.ui.loading} 
                         // onClick={(e) => postDetails(e)}
                         >Submit
-                            {state.ui.loading && (
+                            {/* {state.ui.loading && (
                                 <CircularProgress size={30} className="progressSpinner" />
-                            )}
+                            )} */}
                         </Button>
                     </form>
                 </DialogContent>

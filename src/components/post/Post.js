@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
     const { _id, text, author, imageUrl, likes, comments } = props.post
-    console.log(state.user)
+    // console.log(state.user)
     const classes = useStyles();
     const [comment, setComment] = useState('');
 
@@ -259,7 +259,7 @@ const Post = (props) => {
             </CardActions>
             {
                 comments.map(record => {
-                    console.log(record.postedBy._id, state.user.credentials._id);
+                    // console.log(record.postedBy._id, state.user.credentials._id);
                     return (
                         <div className={classes.comments} key={record._id}>
                             <Typography variant="h6" color="secondary">{record.postedBy.name}</Typography>

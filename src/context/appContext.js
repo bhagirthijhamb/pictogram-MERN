@@ -1,6 +1,6 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST, DELETE_COMMENT } from './types';
+import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST, DELETE_COMMENT, SET_OTHER_USER, FOLLOW_USER } from './types';
 
 export const AppContext = createContext();
 
@@ -16,6 +16,10 @@ const initialState = {
         myPosts: [],
         likes: [],
         notifications: []
+    },
+    otherUser: {
+        credentials: {},
+        posts: [],
     },
     ui: {
         loading: false,
@@ -42,6 +46,30 @@ const appReducer = (state, action) => {
                 user: {
                     ...state.user,
                     myPosts: action.payload
+                }
+            }
+        case SET_OTHER_USER: 
+        // console.log(action.payload);
+        // console.log(action.payload.userPosts);
+            return {
+                ...state,
+                otherUser: {
+                    ...state.otherUser,
+                    credentials: {...action.payload.user},
+                    posts: [...action.payload.userPosts]
+                }
+            }
+        case FOLLOW_USER:
+            console.log(action.payload)
+            return {
+                ...state,
+                otherUser: {
+                    ...state.otherUser,
+                    credentials: {
+                        ...state.otherUser.credentials,
+                        followers: action.payload.followedUser.followers,
+                        // following: action.payload.foll
+                    }
                 }
             }
         case LOADING_DATA: 

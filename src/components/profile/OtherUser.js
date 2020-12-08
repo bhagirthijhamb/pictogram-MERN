@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 
-import { SET_USER, SET_USER_POSTS } from './../../context/types';
+import { SET_OTHER_USER, FOLLOW_USER } from './../../context/types';
 
 
 const useStyles = makeStyles(theme => ({
@@ -58,6 +58,12 @@ const OtherUser = () => {
                 throw new Error(otherUserDetails.message);
             }
             setOtherUser(otherUserDetails);
+            dispatch({
+                type: SET_OTHER_USER,
+                payload: otherUserDetails
+            })
+            console.log(state.otherUser);
+            console.log(state.otherUser.credentials.followers);
         } catch (err) {
             console.log({ err });
         }
@@ -78,6 +84,10 @@ const OtherUser = () => {
             if(!response.ok){
                 throw new Error(json.error) 
             }
+            dispatch({
+                type: FOLLOW_USER,
+                payload: json
+            })
         } catch(err){
             console.log(err)
         }
@@ -87,7 +97,7 @@ const OtherUser = () => {
         getUser();
     }, [getUser])
 
-    console.log('otherUser', otherUser)
+    // console.log('otherUser', otherUser)
     // console.log(otherUser.user.followers.length)
     // console.log(otherUser.user.following.length)
 
@@ -105,11 +115,11 @@ const OtherUser = () => {
                             <img style={{width: '150px', hieght: '150px', borderRadius: '80px'}} src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fHBlcnNvbnxlbnwwfDJ8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"/>
                         </div>  
                         <div className={classes.profileDetails}>
-                            <Typography variant="h4">{otherUser.user.name}</Typography>
+                            <Typography variant="h4">{state.otherUser.credentials.name}</Typography>
                             <div className={classes.profileDetailsNumbers}>
-                                <Typography variant="h6">{otherUser && otherUser.userPosts.length} posts</Typography>
-                                <Typography variant="h6">{otherUser && otherUser.user.followers.length} followers</Typography>
-                                <Typography variant="h6">{otherUser && otherUser.user.following.length} following</Typography>
+                                <Typography variant="h6">{state.otherUser && state.otherUser.posts.length} posts</Typography>
+                                <Typography variant="h6">{state.otherUser.credentials.followers && state.otherUser.credentials.followers.length} followers</Typography>
+                                <Typography variant="h6">{state.otherUser.credentials.following && state.otherUser.credentials.following.length} following</Typography>
                             </div>
                             <Button
                                 type="submit"
