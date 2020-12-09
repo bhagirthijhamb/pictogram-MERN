@@ -19,7 +19,12 @@ const findUserById = async (id) => {
         return {
             _id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            imageUrl: user.imageUrl,
+            bio: user.bio,
+            website: user.website,
+            followers: user.followers,
+            following: user.following
         }
     } catch(ex) {
         throw(ex);
@@ -95,6 +100,7 @@ module.exports =  {
     getMyDetails: async(req, res) => {
         try {
             const user = await findUserById(req.user.id);
+            // console.log(user);
             if(user){
                 res.json({ data: user });
             }

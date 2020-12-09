@@ -71,6 +71,13 @@ const appReducer = (state, action) => {
                         followers: action.payload.followedUser.followers,
                         // following: action.payload.foll
                     }
+                },
+                user: {
+                    ...state.user,
+                    credentials: {
+                        ...state.user.credentials,
+                        following: action.payload.followingUser.following
+                    }
                 }
             }
         case LOADING_DATA: 

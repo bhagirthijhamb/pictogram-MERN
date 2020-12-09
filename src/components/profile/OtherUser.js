@@ -54,7 +54,7 @@ const OtherUser = () => {
                 },
             })
             const otherUserDetails = await response.json();
-            // console.log(otherUserDetails)
+            console.log(otherUserDetails)
             if(!response.ok){
                 throw new Error(otherUserDetails.message);
             }
@@ -124,7 +124,9 @@ const OtherUser = () => {
         getUser();
     }, [getUser])
 
-    // console.log('otherUser', otherUser)
+    console.log(state.user);
+    console.log(state.user.credentials.following);
+    console.log('otherUser', otherUser)
     // console.log(otherUser.user.followers.length)
     // console.log(otherUser.user.following.length)
 
@@ -148,17 +150,8 @@ const OtherUser = () => {
                                 <Typography variant="h6">{state.otherUser.credentials.followers && state.otherUser.credentials.followers.length} followers</Typography>
                                 <Typography variant="h6">{state.otherUser.credentials.following && state.otherUser.credentials.following.length} following</Typography>
                             </div>
-                            {showFollow ? 
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    //   className={classes.submit}
-                                    onClick={() => followUser()}
-                                    >
-                                    Follow
-                                </Button>    
-                            : 
+                            {state.user.credentials.following.includes(otherUser.user._id)
+                                ? 
                                 <Button
                                     type="submit"
                                     variant="outlined"
@@ -168,9 +161,17 @@ const OtherUser = () => {
                                     >
                                     Unfollow
                                 </Button>
-                            }
-                            
-                            
+                                : 
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    //   className={classes.submit}
+                                    onClick={() => followUser()}
+                                    >
+                                    Follow
+                                </Button>
+                            }                            
                         </div>
                     </div>
                     <div className={classes.profilePageBottom}>

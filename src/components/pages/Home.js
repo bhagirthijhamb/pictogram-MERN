@@ -19,6 +19,8 @@ const Home = (props) => {
     let { path, url } = useRouteMatch();
     // console.log(path, url)
 
+    // console.log(props.user);
+
     const [state, dispatch] = useContext(AppContext); 
     
     useEffect(() => {

@@ -47,6 +47,7 @@ const User = () => {
             },
         })
         const json = await response.json();
+        console.log(json);
         console.log(json.user);
         console.log(json.userPosts);
         if(!response.ok){
