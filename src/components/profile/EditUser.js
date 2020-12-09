@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { AppContext } from './../../context/appContext';
-import { useContext, useEffect, useCallback } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { SET_USER, SET_USER_POSTS } from './../../context/types';
 import { Button } from '@material-ui/core';
-
-
 
 const useStyles = makeStyles(theme => ({
     editProfile: {
@@ -52,40 +50,118 @@ const useStyles = makeStyles(theme => ({
 const EditUser = () => {
     const classes = useStyles();
     const [state, dispatch] = useContext(AppContext); 
+    const [ websitee, setWebsitee ] = useState('');
+    const [ bioo, setBioo ] = useState('');
+    const [ image, setImage ] = useState('');
+    const [ imgUrl, setImgUrl ] = useState('');
 
-    const getMyProfile = useCallback(async function() {
-        try {
-        const response = await fetch('/api/users/user', {
-            headers: {
-                credentials: 'include',
-            },
-        })
-        const json = await response.json();
-        console.log(json);
-        console.log(json.user);
-        console.log(json.userPosts);
-        if(!response.ok){
-            throw new Error(json.message);
-        }
-        dispatch({
-            type: SET_USER,
-            payload: json.user
-        })
-        dispatch({
-            type: SET_USER_POSTS,
-            payload: json.userPosts
-        })
-        } catch (err) {
-            console.log({ err });
-        }
-    }, [])
+    // const getMyProfile = useCallback(async function() {
+    //     try {
+    //     const response = await fetch('/api/users/user', {
+    //         headers: {
+    //             credentials: 'include',
+    //         },
+    //     })
+    //     const json = await response.json();
+    //     console.log(json);
+    //     console.log(json.user);
+    //     console.log(json.userPosts);
+    //     if(!response.ok){
+    //         throw new Error(json.message);
+    //     }
+    //     dispatch({
+    //         type: SET_USER,
+    //         payload: json.user
+    //     })
+    //     dispatch({
+    //         type: SET_USER_POSTS,
+    //         payload: json.userPosts
+    //     })
+    //     } catch (err) {
+    //         console.log({ err });
+    //     }
+    // }, [])
 
+    // useEffect(() => {
+    //     getMyProfile();
+    // }, [getMyProfile])
+
+    
+    const { credentials: {name, imageUrl, bio, website, email, followers, following}, myPosts } = state.user;
+    // console.log(followers, following)
+    
     useEffect(() => {
-        getMyProfile();
-    }, [getMyProfile])
+      setImgUrl(imageUrl ? imageUrl : '')
+      setWebsitee(website ? website : '');
+      setBioo(bio ? bio : '')
+    },[])
 
-  const { credentials: {name, imageUrl, bio, webiste, email, followers, following}, myPosts } = state.user;
-  console.log(followers, following)
+    async function updatePhoto (file) {
+      setImage(file);
+    }
+
+    useEffect(async() => {
+      if(image){
+        try {
+          const data = new FormData()
+          data.append('file', image);
+          data.append('upload_preset', "pictogram");
+          data.append('cloud_name', 'dbagdzszp');
+          const response = await fetch('https://api.cloudinary.com/v1_1/dbagdzszp/image/upload', {
+              method: 'post',
+              body: data
+          })
+          const dataBack = await response.json();
+          if(dataBack){
+              console.log(dataBack);
+              setImgUrl(dataBack.url);
+              console.log(dataBack);
+          }
+        } catch(err){
+            console.log(err);
+        }
+      }
+    }, [image])
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        if(imgUrl){
+        // dispatch({ type: LOADING_UI });
+        try {
+            const url = `/api/users/user/editProfile`;
+            const method = 'PUT';
+            // console.log(text)
+            const response = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                  imageUrl: imgUrl,
+                  website: websitee,
+                  bio: bioo 
+                })
+            })
+            // setText('')
+            const data = await response.json();
+            console.log(data)
+            
+            // dispatch(clearErrors())
+            if(!response.ok) {
+                throw new Error()
+            }
+            if(response.ok){
+              //  dispatch({
+              //     type: SET_USER,
+              //     payload: json.user
+              // })
+                // history.push('/');
+            }
+        } catch(err){
+            console.log(err)
+        }
+      }
+    }       
 
     return (
         // <div className="classes root container">
@@ -95,9 +171,7 @@ const EditUser = () => {
                 <Grid item sm={8} xs={12} container>
                     <div className={classes.editProfile}>
                       <h3>Edit User Profile</h3>
-                      <form className={classes.form} 
-                      // onSubmit={handleSubmit} 
-                      noValidate>
+                      <form className={classes.form} onSubmit={handleSubmit} noValidate>
                         {/* Image */}
                         <div className={classes.userDetail}>
                           <div className={classes.label}>
@@ -112,6 +186,7 @@ const EditUser = () => {
                                 multiple
                                 type="file"
                                 // onChange={(e) => setImage(e.target.files[0])}
+                                onChange={(e) => updatePhoto(e.target.files[0])}
                             />
                             <label htmlFor="raised-button-file">
                                 <Button raised component="span" 
@@ -131,8 +206,9 @@ const EditUser = () => {
                             <TextField
                               variant="outlined" margin="normal" fullWidth id="email" 
                               label="Website" name="email" autoComplete="email" autoFocus
-                              // value={email} helperText={errors.email} error={errors.email ? true : false}
-                              // onChange={(e) => { setEmail(e.target.value); }}
+                              value={websitee} 
+                              // helperText={errors.email} error={errors.email ? true : false}
+                              onChange={(e) => { setWebsitee(e.target.value); }}
                             />
                           </div>
                         </div>
@@ -142,16 +218,10 @@ const EditUser = () => {
                             <Typography variant="subtitle1" className={classes.subtitle}>Bio</Typography>
                           </div>
                           <div className={classes.formField}>
-                            {/* <TextField
-                              variant="outlined" margin="normal" fullWidth id="email" 
-                              label="Bio" name="email" autoComplete="email" autoFocus
-                              // value={email} helperText={errors.email} error={errors.email ? true : false}
-                              // onChange={(e) => { setEmail(e.target.value); }}
-                            /> */}
                             <TextField variant="outlined" name="body" type="text" label="Bio" multiline rows="2" placeholder="Bio"  
-                            // value={text} 
+                            value={bioo} 
                             className="textField" 
-                            // onChange={handleChange} 
+                            onChange={(e) => { setBioo(e.target.value)}} 
                             fullWidth />
                           </div>
                         </div>

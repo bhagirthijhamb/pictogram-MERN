@@ -201,5 +201,30 @@ module.exports =  {
             console.log(er);
             return res.status(422).json({ error: err })
         }
+    },
+    editUserProfile: async (req, res) => {
+        try {
+            const { imageUrl, website, bio } = req.body
+            const updatedUserProfile = await User.findByIdAndUpdate(req.user.id, {
+                $set: { imageUrl, website, bio }
+            }, {
+                new: true
+            })
+            if(updatedUserProfile){
+                const user =  {
+                    _id: updatedUserProfile._id,
+                    name: updatedUserProfile.name,
+                    email: updatedUserProfile.email,
+                    imageUrl: updatedUserProfile.imageUrl,
+                    bio: updatedUserProfile.bio,
+                    website: updatedUserProfile.website,
+                    followers: updatedUserProfile.followers,
+                    following: updatedUserProfile.following
+                }
+                res.json({ data: user });
+            }
+        } catch(err){
+            console.log(err);
+        }
     }
 }
