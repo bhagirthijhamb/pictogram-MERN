@@ -64,6 +64,7 @@ module.exports =  {
 
         try {
             const user = await findUserByEmail(email)
+            console.log(user);
             if(!user) {
                 res.status(400).json({ message: "Invalid email or password"});
                 return;
@@ -164,9 +165,9 @@ module.exports =  {
         }
     },
     unfollowUser: async(req, res) => {
-        console.log(req.user.id, req.body.followId)
+        console.log(req.user.id, req.body.unfollowId)
             try {
-                const followedUser = User.findByIdAndUpdate(req.body.unfollowId, {
+                const followedUser = await User.findByIdAndUpdate(req.body.unfollowId, {
                     $pull: { followers: req.user.id }
                 }, {
                     new: true
@@ -175,15 +176,15 @@ module.exports =  {
                 if(followedUser){
                     console.log('followedUser', followedUser);
                     try {
-                        const followingUser = User.findByIdAndUpdate(req.user.id, {
-                            $pull: { following: req.body.followId}
+                        const followingUser = await User.findByIdAndUpdate(req.user.id, {
+                            $pull: { following: req.body.unfollowId}
                         }, {
                             new: true
                         }
                         )
                         if(followingUser){
-                            console.log('followingUser', followingUser);
-                            res.json(followingUser)
+                            // console.log('followingUser', followingUser);
+                            res.json({ followedUser, followingUser })
                     }
                  } catch(err) {
                      console.log(err)

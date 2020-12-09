@@ -100,6 +100,9 @@ const NavBar = () => {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <CreatePost />
+                        <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts">
+                            Subscribed Posts
+                        </Button>
                         {/* <Button color="inherit" component={Link} to="/login">Login</Button> */}
                         {/* <Button color="inherit" component={Link} to="/signup">Signup</Button> */}
                         <Button color="inherit" component={Link} to="/">Home</Button>

@@ -14,6 +14,21 @@ module.exports = {
                 res.status(500).json({ message: 'Internal server error' });
             }
         },
+    getSubscribedPosts: async (req, res) => {
+        console.log(req.user);
+        console.log('following', req.user.following);
+        console.log('followers', req.user.followers);
+        try {
+            const posts = await Post.find({ author: { $in: req.user.following }}).populate("author", "_id name").populate("comments.postedBy", "_id name");
+            if(posts){
+                console.log(posts)
+                return res.status(200).json(posts)
+            }
+        } catch(err){
+            console.log(err);
+            res.status(500).json({ message: 'Internal server error'})
+        }
+    },
     createPost: async(req, res) => {
             try {
                 const { text, imageUrl } = req.body;

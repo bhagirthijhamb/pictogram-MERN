@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verifyToken } =  require('./../utils/auth');
 
-const { getUsers, createUser, loginUser, getUser, getMyDetails, getMyProfile, getUserDetails, followUser } = require('./userController');
+const { getUsers, createUser, loginUser, getUser, getMyDetails, getMyProfile, getUserDetails, followUser, unfollowUser } = require('./userController');
 
 router.route('/')
     .get(getUsers) // GET /api/users/
@@ -13,4 +13,5 @@ router.use(verifyToken).route('/me').get(getMyDetails) // GET /api/users/me/
 router.use(verifyToken).route('/user').get(getMyProfile) // GET /api/users/me/
 router.use(verifyToken).route('/user/:userId').get(getUserDetails) // GET /api/users/user/:userId
 router.use(verifyToken).route('/user/follow').put(followUser);
+router.use(verifyToken).route('/user/unfollow').put(unfollowUser);
 module.exports = router;

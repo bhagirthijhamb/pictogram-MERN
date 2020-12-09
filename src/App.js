@@ -11,6 +11,7 @@ import Footer from './components/layout/Footer';
 import User from './components/profile/User';
 import OtherUser from './components/profile/OtherUser';
 import Navbar from './components/layout/Navbar';
+import SubscribedUserPosts from './components/pages/SubscribedUserPosts';
 
 // MUI 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -104,6 +105,7 @@ function App() {
                 />
                 <Route exact path='/user' component={User} />
                 <Route path='/user/:userId' component={OtherUser} />
+                <Route path='/subscribedPosts' component={SubscribedUserPosts} />
               </Switch>
             {/* </div> */}
             {user && <Footer />}

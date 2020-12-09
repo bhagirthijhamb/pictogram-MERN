@@ -7,6 +7,7 @@ export const LOADING_USER = 'LOADING_USER';
 export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
 export const SET_OTHER_USER = 'SET_OTHER_USER';
 export const FOLLOW_USER = 'FOLLOW_USER';
+export const UNFOLLOW_USER = 'UNFOLLOW_USER';
 
 // UI types
 export const SET_ERRORS = 'SET_ERRORS';

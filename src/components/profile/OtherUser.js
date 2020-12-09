@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 
-import { SET_OTHER_USER, FOLLOW_USER } from './../../context/types';
+import { SET_OTHER_USER, FOLLOW_USER, UNFOLLOW_USER } from './../../context/types';
 
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +42,7 @@ const OtherUser = () => {
     const classes = useStyles();
     const [state, dispatch] = useContext(AppContext); 
     const [otherUser, setOtherUser] = useState(null)
+    const [showFollow, setshowFollow] = useState(true);
     const { userId } = useParams();
     // console.log(userId);
 
@@ -88,6 +89,32 @@ const OtherUser = () => {
                 type: FOLLOW_USER,
                 payload: json
             })
+            setshowFollow(false)
+        } catch(err){
+            console.log(err)
+        }
+    }
+
+    const unfollowUser = async() => {
+        try {
+            const response = await fetch('/api/users/user/unfollow', {
+                method: "put",
+                headers: {
+                    credentials: 'include',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ unfollowId: userId })
+            })
+            const json = await response.json()
+            console.log(json);
+            if(!response.ok){
+                throw new Error(json.error) 
+            }
+            dispatch({
+                type: UNFOLLOW_USER,
+                payload: json
+            })
+            setshowFollow(true)
         } catch(err){
             console.log(err)
         }
@@ -121,15 +148,29 @@ const OtherUser = () => {
                                 <Typography variant="h6">{state.otherUser.credentials.followers && state.otherUser.credentials.followers.length} followers</Typography>
                                 <Typography variant="h6">{state.otherUser.credentials.following && state.otherUser.credentials.following.length} following</Typography>
                             </div>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                //   className={classes.submit}
-                                onClick={() => followUser()}
-                                >
-                                Follow
-                            </Button>
+                            {showFollow ? 
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    //   className={classes.submit}
+                                    onClick={() => followUser()}
+                                    >
+                                    Follow
+                                </Button>    
+                            : 
+                                <Button
+                                    type="submit"
+                                    variant="outlined"
+                                    color="black"
+                                    //   className={classes.submit}
+                                    onClick={() => unfollowUser()}
+                                    >
+                                    Unfollow
+                                </Button>
+                            }
+                            
+                            
                         </div>
                     </div>
                     <div className={classes.profilePageBottom}>
