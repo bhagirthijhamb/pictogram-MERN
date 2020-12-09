@@ -7,6 +7,9 @@ const bcrypt = require('bcryptjs');
 const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
+    imageUrl: { type: String, default: 'https://res.cloudinary.com/dbagdzszp/image/upload/v1607520695/no-img_lxsyee.png'},
+    website: { type: String, default: ''},
+    bio: { type: String, default: ''},
     password: { type: String, required: true },
     followers: [{ type: ObjectId, ref: "User"}],
     following: [{ type: ObjectId, ref: "User"}]

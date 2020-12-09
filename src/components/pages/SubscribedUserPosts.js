@@ -47,7 +47,7 @@ const SubscribedUserPosts = (props) => {
               <Grid item sm={1} xs={12}>
               </Grid>
               <Grid item sm={7} xs={12}>
-                  <h2>Subscribed Posts</h2>
+                  <h2>Subscribed <br /> Posts</h2>
                   {postsMarkup}
               </Grid>
               <Grid item sm={4} xs={12}>

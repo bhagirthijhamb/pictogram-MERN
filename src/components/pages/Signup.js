@@ -192,6 +192,7 @@ const SignUp = (props) => {
           >
             Sign Up
           </Button>
+          <p>By signing up, you agree to our Terms , Data Policy and Cookies Policy .</p>
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/login">

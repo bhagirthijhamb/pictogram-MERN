@@ -69,7 +69,7 @@ const User = () => {
         getMyProfile();
     }, [getMyProfile])
 
-  const { credentials: {name, email, followers, following}, myPosts } = state.user;
+  const { credentials: {name, imageUrl, bio, webiste, email, followers, following}, myPosts } = state.user;
   console.log(followers, following)
 
     return (
@@ -80,7 +80,8 @@ const User = () => {
                 <Grid item sm={10} xs={12} container>
                     <div className={classes.profilePageTop}>
                         <div className={classes.profileImage}>
-                            <img style={{width: '150px', hieght: '150px', borderRadius: '80px'}} src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fHBlcnNvbnxlbnwwfDJ8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"/>
+                            {/* <img style={{width: '150px', hieght: '150px', borderRadius: '80px'}} src="https://images.unsplash.com/photo-1597223557154-721c1cecc4b0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjF8fHBlcnNvbnxlbnwwfDJ8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"/> */}
+                            <img style={{width: '150px', hieght: '150px', borderRadius: '80px'}} src={imageUrl}/>
                         </div>  
                         <div className={classes.profileDetails}>
                             <Typography variant="h4">{name}</Typography>
