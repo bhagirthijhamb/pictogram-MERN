@@ -89,7 +89,7 @@ const OtherUser = () => {
                 type: FOLLOW_USER,
                 payload: json
             })
-            setshowFollow(false)
+            // setshowFollow(false)
         } catch(err){
             console.log(err)
         }
@@ -114,7 +114,7 @@ const OtherUser = () => {
                 type: UNFOLLOW_USER,
                 payload: json
             })
-            setshowFollow(true)
+            // setshowFollow(true)
         } catch(err){
             console.log(err)
         }
