@@ -3,6 +3,7 @@ import { AppContext } from './../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { Link } from 'react-router-dom';
 
 import { Typography } from '@material-ui/core';
 import { SET_USER, SET_USER_POSTS } from './../../context/types';
@@ -11,35 +12,40 @@ import { Button } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
-    profilePageTop: {
-        display: "flex",
-        borderBottom: "1px solid grey",
-        width: "100%",
-        padding: "30px 0px"
+    editProfile: {
+      width: "100%",
+      padding: "1rem",
+      marginTop: 50
     },
-    name_editProfile: {
-        display: 'flex',
-        justifyContent: 'space-between'
+    userDetail: {
+      display: "flex",
+      alignItems: "Center"
     },
-    profileImage: {
-        marginRight: '70px',
-        marginLeft: '50px'
+    label: {
+      width: "40%",
+      display: "flex",
+      justifyContent: "flex-end",
+      paddingRight: 40
     },
-    profileDetails: {
-        width: '40%'
+    formField: {
+      width: "60%"
     },
-    profileDetailsNumbers: {
-        display: "flex",
-        justifyContent: 'space-between',
+    submit: {
+      marginTop: 10,
+      display: "block",
+      margin: "0 auto"
     },
-    profilePageGallery: {
-        display: 'flex',
-        flexWrap: "wrap",
-        justifyContent: 'space-around',
-        padding: "20px 0px"
+    name: {
+      fontWeight: 'bold'
     },
-    profilePageGalleryImage: {
-        width: "30%"
+    subtitle: {
+      fontWeight: 'bold'
+    },
+    input: {
+        display: 'none',
+    },
+    button: {
+      border: "1px solid #84A1A8"
     }
 }))
 
@@ -89,33 +95,77 @@ const EditUser = () => {
                 <Grid item sm={8} xs={12} container>
                     <div className={classes.editProfile}>
                       <h3>Edit User Profile</h3>
-                        <div className={classes.editImage}>
-                            <img style={{width: '150px', height: '150px', borderRadius: '80px'}} src={imageUrl}/>
-                            {/* <Link >Change Profile Photo</Link> */}
-                        </div>  
-                        <div className={classes.editImage}>
-                            <form className={classes.form} 
-                            // onSubmit={handleSubmit} 
-                            noValidate>
-                              <TextField
-                                variant="outlined" margin="normal" required fullWidth id="email" 
-                                label="Email Address" name="email" autoComplete="email" autoFocus
-                                // value={email} helperText={errors.email} error={errors.email ? true : false}
-                                // onChange={(e) => { setEmail(e.target.value); }}
-                              />
-            
-           
-                              <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                              >
-                                Submit
-                              </Button>
-                            </form>
+                      <form className={classes.form} 
+                      // onSubmit={handleSubmit} 
+                      noValidate>
+                        {/* Image */}
+                        <div className={classes.userDetail}>
+                          <div className={classes.label}>
+                            <img style={{width: '100px', height: '100px', borderRadius: '80px'}} src={imageUrl}/>
+                          </div>
+                          <div className={classes.formField}>
+                            <Typography variant="h5" className={classes.name}>{name}</Typography>
+                            <input
+                                accept="image/*"
+                                className={classes.input}
+                                id="raised-button-file"
+                                multiple
+                                type="file"
+                                // onChange={(e) => setImage(e.target.files[0])}
+                            />
+                            <label htmlFor="raised-button-file">
+                                <Button raised component="span" 
+                                className={classes.button}
+                                >
+                                Change Profile Photo
+                                </Button>
+                            </label>
+                          </div>
                         </div>
+                        {/* Website */}
+                        <div className={classes.userDetail}>
+                          <div className={classes.label}>
+                            <Typography variant="subtitle1" className={classes.subtitle}>Website</Typography>
+                          </div>
+                          <div className={classes.formField}>
+                            <TextField
+                              variant="outlined" margin="normal" fullWidth id="email" 
+                              label="Website" name="email" autoComplete="email" autoFocus
+                              // value={email} helperText={errors.email} error={errors.email ? true : false}
+                              // onChange={(e) => { setEmail(e.target.value); }}
+                            />
+                          </div>
+                        </div>
+                        {/* Bio */}
+                        <div className={classes.userDetail}>
+                          <div className={classes.label}>
+                            <Typography variant="subtitle1" className={classes.subtitle}>Bio</Typography>
+                          </div>
+                          <div className={classes.formField}>
+                            {/* <TextField
+                              variant="outlined" margin="normal" fullWidth id="email" 
+                              label="Bio" name="email" autoComplete="email" autoFocus
+                              // value={email} helperText={errors.email} error={errors.email ? true : false}
+                              // onChange={(e) => { setEmail(e.target.value); }}
+                            /> */}
+                            <TextField variant="outlined" name="body" type="text" label="Bio" multiline rows="2" placeholder="Bio"  
+                            // value={text} 
+                            className="textField" 
+                            // onChange={handleChange} 
+                            fullWidth />
+                          </div>
+                        </div>
+                        
+                        <Button
+                          type="submit"
+                          // fullWidth
+                          variant="contained"
+                          color="primary"
+                          className={classes.submit}
+                        >
+                          Submit
+                        </Button>
+                      </form>
                     </div>
                 </Grid>
                 <Grid item sm={2} xs={12}>
