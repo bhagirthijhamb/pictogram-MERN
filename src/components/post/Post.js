@@ -85,6 +85,13 @@ const useStyles = makeStyles((theme) => ({
     },
     commentDelete: {
         padding: 0
+    },
+    likeBtn: {
+        padding: 0
+    },
+    commentBtn: {
+        padding: 0,
+        marginLeft: 20
     }
 }))
 
@@ -243,19 +250,22 @@ const Post = (props) => {
             </CardContent>
             <CardActions disableSpacing>
                 {likes.includes(state.user.credentials._id)
-                ? <IconButton aria-label="add to favorites">
-                    <FavoriteIcon style={{ color: 'red', fontSize: 28 }} onClick={() => {unlikePost(_id)}} />
+                ? <IconButton aria-label="add to favorites" className={classes.likeBtn}>
+                    <FavoriteIcon style={{ color: '#FF7A89', fontSize: 28 }} onClick={() => {unlikePost(_id)}} />
                   </IconButton>
-                : <IconButton aria-label="add to favorites">
+                : <IconButton aria-label="add to favorites" className={classes.likeBtn}>
                     <FavoriteIcon style={{ color: 'grey', fontSize: 28 }} onClick={() => {likePost(_id)}} />
                   </IconButton>
                 }
                  <Typography variant="body2" color="textSecondary" component="p">
                     {likes.length} likes
                 </Typography>
-                <IconButton aria-label="add to favorites">
+                <IconButton aria-label="add to favorites" className={classes.commentBtn}>
                     <ChatIcon />
                 </IconButton>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {comments.length} comments
+                </Typography>
             </CardActions>
             {
                 comments.map(record => {
