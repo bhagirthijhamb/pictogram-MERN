@@ -221,7 +221,7 @@ module.exports =  {
                     followers: updatedUserProfile.followers,
                     following: updatedUserProfile.following
                 }
-                res.json({ data: user });
+                res.json(user);
             }
         } catch(err){
             console.log(err);

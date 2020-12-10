@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
         width: '40%'
     },
     profileDetailsNumbers: {
+        marginTop: 15,
         display: "flex",
         justifyContent: 'space-between',
     },
@@ -35,6 +36,23 @@ const useStyles = makeStyles(theme => ({
     },
     profilePageGalleryImage: {
         width: "30%"
+    },
+    websiteBio_Follow: {
+        display: "flex",
+        justifyContent: "space-between"
+    },
+    website_bio: {
+        width: '50%',
+        marginTop: 10,
+        marginBottom: 10,
+        paddingLeft: 10
+    },
+    website: {
+        fontWeight: 'bold',
+        color: '#CC616E'
+    },
+    follow_unfollow_Btn: {
+        margin: 'auto'
     }
 }))
 
@@ -124,9 +142,10 @@ const OtherUser = () => {
         getUser();
     }, [getUser])
 
-    console.log(state.user);
-    console.log(state.user.credentials.following);
+    // console.log(state.user);
+    // console.log(state.user.credentials.following);
     console.log('otherUser', otherUser)
+    console.log('state.otherUser', state.otherUser)
     // console.log(otherUser.user.followers.length)
     // console.log(otherUser.user.following.length)
 
@@ -145,33 +164,44 @@ const OtherUser = () => {
                         </div>  
                         <div className={classes.profileDetails}>
                             <Typography variant="h4">{state.otherUser.credentials.name}</Typography>
+                        {/* Posts Followers Following */}
                             <div className={classes.profileDetailsNumbers}>
                                 <Typography variant="h6">{state.otherUser && state.otherUser.posts.length} posts</Typography>
                                 <Typography variant="h6">{state.otherUser.credentials.followers && state.otherUser.credentials.followers.length} followers</Typography>
                                 <Typography variant="h6">{state.otherUser.credentials.following && state.otherUser.credentials.following.length} following</Typography>
                             </div>
-                            {state.user.credentials.following.includes(otherUser.user._id)
-                                ? 
-                                <Button
-                                    type="submit"
-                                    variant="outlined"
-                                    color="black"
-                                    //   className={classes.submit}
-                                    onClick={() => unfollowUser()}
-                                    >
-                                    Unfollow
-                                </Button>
-                                : 
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    //   className={classes.submit}
-                                    onClick={() => followUser()}
-                                    >
-                                    Follow
-                                </Button>
-                            }                            
+                        {/* Bio & Website */}
+                            <div className={classes.websiteBio_Follow}>
+                                <div className={classes.website_bio}>
+                                    {state.otherUser.credentials.bio ? <Typography variant="h6" className={classes.bio}>{state.otherUser.credentials.bio}</Typography> : null}
+                                    {state.otherUser.credentials.website ? <Typography variant="h6" className={classes.website}><a href={`http://${state.otherUser.credentials.website}`} target="_black">{state.otherUser.credentials.website}</a></Typography> : null}
+                                </div>
+                                <div className={classes.follow_unfollow_Btn}>
+                                   {state.user.credentials.following.includes(otherUser.user._id)
+                                    ? 
+                                    <Button
+                                        type="submit"
+                                        variant="outlined"
+                                        color="black"
+                                        className={classes.follow}
+                                        onClick={() => unfollowUser()}
+                                        >
+                                        Unfollow
+                                    </Button>
+                                    : 
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        className={classes.follow}
+                                        onClick={() => followUser()}
+                                        >
+                                        Follow
+                                    </Button>
+                                }
+                                </div>
+                            </div>
+                                                     
                         </div>
                     </div>
                     <div className={classes.profilePageBottom}>

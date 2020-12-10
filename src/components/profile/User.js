@@ -115,7 +115,7 @@ const User = () => {
                         {/* Bio & Website */}
                             <div className={classes.website_bio}>
                                 {bio ? <Typography variant="h6" className={classes.bio}>{bio}</Typography> : null}
-                                {website ? <Typography variant="h6" className={classes.website}><a href={`http://${website}`}>{website}</a></Typography> : null}
+                                {website ? <Typography variant="h6" className={classes.website}><a href={`http://${website}`} target="_black">{website}</a></Typography> : null}
                             </div>
                         </div>
                     </div>

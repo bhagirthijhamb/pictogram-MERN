@@ -54,38 +54,6 @@ const EditUser = () => {
     const [ bioo, setBioo ] = useState('');
     const [ image, setImage ] = useState('');
     const [ imgUrl, setImgUrl ] = useState('');
-
-    // const getMyProfile = useCallback(async function() {
-    //     try {
-    //     const response = await fetch('/api/users/user', {
-    //         headers: {
-    //             credentials: 'include',
-    //         },
-    //     })
-    //     const json = await response.json();
-    //     console.log(json);
-    //     console.log(json.user);
-    //     console.log(json.userPosts);
-    //     if(!response.ok){
-    //         throw new Error(json.message);
-    //     }
-    //     dispatch({
-    //         type: SET_USER,
-    //         payload: json.user
-    //     })
-    //     dispatch({
-    //         type: SET_USER_POSTS,
-    //         payload: json.userPosts
-    //     })
-    //     } catch (err) {
-    //         console.log({ err });
-    //     }
-    // }, [])
-
-    // useEffect(() => {
-    //     getMyProfile();
-    // }, [getMyProfile])
-
     
     const { credentials: {name, imageUrl, bio, website, email, followers, following}, myPosts } = state.user;
     // console.log(followers, following)
@@ -126,11 +94,9 @@ const EditUser = () => {
     async function handleSubmit(e){
         e.preventDefault();
         if(imgUrl){
-        // dispatch({ type: LOADING_UI });
         try {
             const url = `/api/users/user/editProfile`;
             const method = 'PUT';
-            // console.log(text)
             const response = await fetch(url, {
                 method,
                 headers: {
@@ -142,20 +108,17 @@ const EditUser = () => {
                   bio: bioo 
                 })
             })
-            // setText('')
             const data = await response.json();
             console.log(data)
             
-            // dispatch(clearErrors())
             if(!response.ok) {
                 throw new Error()
             }
             if(response.ok){
-              //  dispatch({
-              //     type: SET_USER,
-              //     payload: json.user
-              // })
-                // history.push('/');
+               dispatch({
+                  type: SET_USER,
+                  payload: data
+              })
             }
         } catch(err){
             console.log(err)
