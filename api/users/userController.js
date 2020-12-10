@@ -226,5 +226,14 @@ module.exports =  {
         } catch(err){
             console.log(err);
         }
+    },
+    logoutUser: async (req, res) => {
+        console.log('inside logout user')
+        try {
+            res.clearCookie('token');
+            res.status(200).json('token deleted');
+        } catch(err) {
+            console.log(err)
+        }
     }
 }

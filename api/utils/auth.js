@@ -5,7 +5,6 @@ const User = require('./../users/userModel');
 exports.verifyToken = async(req, res, next) => {
     const { cookies } = req;
     try {
-        // console.log('inside virify');
         if(!cookies || !cookies.token){
             res.status(403).json({ message: 'authorization required' });
             return;

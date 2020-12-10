@@ -1,6 +1,6 @@
 import CreatePost from './../post/CreatePost';
-import { Link } from 'react-router-dom';
 import { useRouteMatch } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 // MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -83,8 +83,22 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
     let { path, url } = useRouteMatch();
-
     const classes = useStyles();
+    const history = useHistory();
+
+    async function logout(){
+        try{
+            const response = await fetch('/api/users/logout');
+            const json = await response.json();
+            console.log(json)
+            if(response.ok){
+                history.push('/')
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
+
     return (
         <AppBar>
             <Toolbar>
@@ -103,14 +117,12 @@ const NavBar = () => {
                         <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts">
                             Subscribed Posts
                         </Button>
-                        {/* <Button color="inherit" component={Link} to="/login">Login</Button> */}
-                        {/* <Button color="inherit" component={Link} to="/signup">Signup</Button> */}
                         <Button color="inherit" component={Link} to="/">Home</Button>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
+                        {/* <IconButton aria-label="show 17 new notifications" color="inherit">
                             <Badge badgeContent={17} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
-                        </IconButton>
+                        </IconButton> */}
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
@@ -122,33 +134,14 @@ const NavBar = () => {
                             >
                             <AccountCircleIcon />
                         </IconButton>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                    {/* <div> */}
-                        <IconButton
-                            aria-label="show more"
-                            // aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            // onClick={handleMobileMenuOpen}
-                            color="inherit"
-                            >
-                            <MoreVertIcon />
-                        </IconButton>
+                        <Button className={classes.subscribedPosts_Btn} onClick={logout}>
+                            Logout
+                        </Button>
                     </div>
                 </div>
                 
             </Toolbar>
         </AppBar>
-        // <nav>
-        //     <div className="nav-wrapper">
-        //     <Link to="#" className="brand-logo left">Pictogram</Link>
-        //     <ul id="nav-mobile" className="right">
-        //         <li><Link to="/login">Login</Link></li>
-        //         <li><Link to="/signup">Signup</Link></li>
-        //         <li><Link to="/users/:handle">Profile</Link></li>
-        //     </ul>
-        //     </div>
-        // </nav>
     )
 }
 
