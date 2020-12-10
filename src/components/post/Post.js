@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
     const [state, dispatch] = useContext(AppContext); 
     const { _id, text, author, imageUrl, likes, comments } = props.post
-    // console.log(state.user)
+    // console.log(props.post)
     const classes = useStyles();
     const [comment, setComment] = useState('');
 
@@ -226,10 +226,11 @@ const Post = (props) => {
          <Card className={classes.root} key={_id}>
             <CardActions>
                 <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
+                    <div className={classes.profileImage}>
+                        <img style={{width: '50px', height: '50px', borderRadius: '25px'}} src={author.imageUrl}/>
+                    </div>
                 </Avatar>
                 <Typography className={classes.authorName} component={Link} to={author._id !== state.user.credentials._id ? `/user/${author._id}` : `/user` }>
-                {/* <Typography className={classes.root} component={Link} to={`/user/${author._id}` }> */}
                         {author.name}
                 </Typography>
                 {author._id == state.user.credentials._id && 

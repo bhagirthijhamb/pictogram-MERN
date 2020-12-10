@@ -5,7 +5,7 @@ const { post } = require('./postRoutes');
 module.exports = {
     getPosts: async (req, res) => {
             try {
-                const posts = await Post.find().populate("author", "_id name").populate("comments.postedBy", "_id name");
+                const posts = await Post.find().populate("author", "_id name imageUrl").populate("comments.postedBy", "_id name");
                 if(posts){
                     return res.status(200).json(posts)
                 }
