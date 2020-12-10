@@ -123,7 +123,7 @@ const CreatePost = () => {
                 <DialogTitle>Post a new thought</DialogTitle>
                 <DialogContent>
                     <form onSubmit={handleSubmit}>
-                        <TextField name="body" type="text" label="Babble..." multiline rows="3" placeholder="Share with your friends..."  value={text} className="textField" onChange={handleChange} fullWidth />
+                        <TextField name="body" type="text" label="Post..." multiline rows="3" placeholder="Share with your friends..."  value={text} className="textField" onChange={handleChange} fullWidth />
                         <input
                             accept="image/*"
                             className={classes.input}

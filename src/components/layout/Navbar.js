@@ -16,6 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Button } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
+
 const useStyles = makeStyles((theme) => ({
     navContainer: {
         width: "1000px",
@@ -81,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NavBar = () => {
+const NavBar = (props) => {
     let { path, url } = useRouteMatch();
     const classes = useStyles();
     const history = useHistory();
@@ -92,7 +93,9 @@ const NavBar = () => {
             const json = await response.json();
             console.log(json)
             if(response.ok){
-                history.push('/')
+                console.log('response is OK')
+                props.updateUser(undefined)
+                history.push('/login')
             }
         }catch(err){
             console.log(err)

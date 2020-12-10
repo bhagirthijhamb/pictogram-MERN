@@ -62,13 +62,14 @@ function App() {
   useEffect(() => {
     getUser();
   }, [getUser])
+  console.log(user)
 
   return (
     <MuiThemeProvider theme={theme}>
       <AppContextProvider>
         <Router>
           <div className="app">
-            {user && <Navbar />}
+            {user && <Navbar updateUser={setUser} />}
             {/* <div className="container"> */}
               <Switch>
                 {/* <Route exact path='/' component={Home} /> */}
@@ -99,7 +100,7 @@ function App() {
                   path='/login' 
                   render={ props => {
                     if(user){
-                      return <Redirect tp='/' />
+                      return <Redirect to='/' />
                     }
                     return <Login getUser={getUser} {...props} />
                   }} 
