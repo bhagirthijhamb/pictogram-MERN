@@ -64,10 +64,12 @@ const useStyles = makeStyles((theme) => ({
         right: '10px'
     },
     comments: {
-        padding: '0px 10px',
+        width: '95%',
+        padding: '0 20px',
         display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: "center"
+        justifyContent: 'space-between',
+        alignItems: "center",
+        margin: "0 0"
     },
     commentSection: {
         display: "flex"
@@ -76,6 +78,14 @@ const useStyles = makeStyles((theme) => ({
         // width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
+    commentName: {
+        color: "#CC616E",
+        fontWeight: 'bold',
+        marginRight: 10
+    },
+    commentDelete: {
+        padding: 0
+    }
 }))
 
 const Post = (props) => {
@@ -246,26 +256,15 @@ const Post = (props) => {
                 <IconButton aria-label="add to favorites">
                     <ChatIcon />
                 </IconButton>
-                {/* <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton> */}
-                <IconButton
-                    // onClick={handleExpandClick}
-                    // aria-expanded={expanded}
-                    // aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </IconButton>
             </CardActions>
             {
                 comments.map(record => {
                     // console.log(record.postedBy._id, state.user.credentials._id);
                     return (
                         <div className={classes.comments} key={record._id}>
-                            <Typography variant="h6" color="secondary">{record.postedBy.name}</Typography>
-                            <Typography variant="body1" style={{ marginLeft: 6, paddingTop: 4 }}>{record.text}</Typography>
+                            <Typography variant="body1"><span className={classes.commentName}>{record.postedBy.name}</span>{record.text}</Typography>
                             {record.postedBy._id == state.user.credentials._id && 
-                                <IconButton aria-label="settings">
+                                <IconButton aria-label="settings" className={classes.commentDelete}>
                                     <DeleteOutlineIcon onClick={() => deleteComment(_id, record._id)} />
                                 </IconButton>
                             }

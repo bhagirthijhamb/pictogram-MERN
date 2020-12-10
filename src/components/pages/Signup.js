@@ -42,9 +42,7 @@ const SignUp = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  // const [lastName, setLastName] = useState('');
   const [errors, setErrors] = useState({})
-  const history = useHistory();
   
   useEffect(() => {
     if(state.ui.errors){
@@ -68,16 +66,12 @@ const SignUp = (props) => {
       const data = await response.json();
       console.log(data)
       if(!response.ok){
-        // throw new Error(data)
         dispatch({
           type: SET_ERRORS,
           payload: data
         })
       }
 
-      // if(response.ok){
-      //   history.push('/login');
-      // }
       const loginResponse = await fetch('/api/users/login', {
         method: 'POST',
         headers: {
@@ -116,20 +110,6 @@ const SignUp = (props) => {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6}> */}
-              {/* <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              /> */}
-            {/* </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"

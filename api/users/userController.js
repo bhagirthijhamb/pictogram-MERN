@@ -43,19 +43,17 @@ module.exports =  {
         // 400 - Bad request
         // 422 - Unprocessable enttiy, server has understood the request but cannot process it
         if(!valid) return res.status(422).json(errors);
-        // res.json({message: "created successfully"})
 
         try {
             const foundUser = await findUserByEmail(email)
             if(foundUser) {
-                return res.status(400).json({ error: `Email address ${email} already taken, try another email address.`})
+                return res.status(400).json({ error: `${email} already taken, try another email address.`})
             }    
 
             const newUser = new User(req.body);
             const user = await newUser.save();
-            // return res.status(200).json({ message: "User Created successfully" })
             if(user){
-                return res.status(201).json({ user: [user], message: "User Created successfully" })
+                return res.status(201).json({ user: [user] })
             }
         } catch(err) {
             console.log(err);
@@ -74,11 +72,6 @@ module.exports =  {
                 res.status(400).json({ message: "Invalid email or password"});
                 return;
             } else {
-                // if(user && user.password === password) {
-                //     res.json({ user: [user]})
-                // } else { 
-                //     next(new Error('unauthorized'))
-                // }
                 const isMatch = await user.comparePasswords(password);
                 if(!isMatch){
                     res.status(400).json({ message: "Invalid email or password"});
