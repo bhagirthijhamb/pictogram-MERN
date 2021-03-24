@@ -15,7 +15,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Button } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-
+import HomeIcon from '@material-ui/icons/Home';
+import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
+import LockIcon from '@material-ui/icons/Lock';
 
 const useStyles = makeStyles((theme) => ({
     navContainer: {
@@ -28,9 +30,13 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     title: {
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
-    },
+        marginLeft: theme.spacing(5),
+        marginRight: theme.spacing(2),
+        fontFamily: 'Pacifico',
+        fontSize: '2rem',
+        // margin-left: 3rem;
+        // padding: 0 0 2px 0; 
+        },
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -42,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
+        marginLeft: theme.spacing(5),
         width: 'auto',
         },
     },
@@ -106,7 +112,7 @@ const NavBar = (props) => {
         <AppBar>
             <Toolbar>
                 <div className={classes.navContainer}>
-                        <Typography className={classes.title} variant="h6" noWrap>Pictogram</Typography>
+                        <Typography className={classes.title} className="brand-logo" variant="h6" noWrap>Pictogram</Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -118,27 +124,16 @@ const NavBar = (props) => {
                     <div className={classes.sectionDesktop}>
                         <CreatePost />
                         <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts">
-                            Subscribed Posts
+                            <SubscriptionsIcon />
                         </Button>
-                        <Button color="inherit" component={Link} to="/">Home</Button>
-                        {/* <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton> */}
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            // aria-controls={menuId}
-                            aria-haspopup="true"
-                            // onClick={handleProfileMenuOpen}
-                            color="inherit"
-                            component={Link} to="/user"
-                            >
+                        <Button color="inherit" component={Link} to="/">
+                            <HomeIcon />
+                        </Button>
+                        <Button component={Link} to="/user">
                             <AccountCircleIcon />
-                        </IconButton>
+                        </Button>
                         <Button className={classes.subscribedPosts_Btn} onClick={logout}>
-                            Logout
+                            <LockIcon />
                         </Button>
                     </div>
                 </div>

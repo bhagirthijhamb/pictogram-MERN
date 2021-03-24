@@ -19,7 +19,7 @@ module.exports = {
         console.log('following', req.user.following);
         console.log('followers', req.user.followers);
         try {
-            const posts = await Post.find({ author: { $in: req.user.following }}).populate("author", "_id name").populate("comments.postedBy", "_id name");
+            const posts = await Post.find({ author: { $in: req.user.following }}).populate("author", "_id name imageUrl").populate("comments.postedBy", "_id name");
             if(posts){
                 console.log(posts)
                 return res.status(200).json(posts)

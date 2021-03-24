@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 //
 import CloseIcon from '@material-ui/icons/Close';
@@ -112,7 +113,7 @@ const CreatePost = () => {
     return (
         <Fragment>
             <Button onClick={handleOpen}>
-                + Post
+                <AddCircleIcon />
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm' className="postBabbleDialogBox" >
                 <div className="closePostBabbleBtn">

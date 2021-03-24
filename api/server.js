@@ -2,17 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const app = express();
-
-
+const { MONGO_URI } = require('./keys');
 
 app.use(cookieParser());
 // Express body parser middleware
 app.use(express.json({ extended: false }));
 // Define middleware
-const customMiddleware = (req, res, next) => {
-    console.log('middleware executed !');
-    next();
-}
+// const customMiddleware = (req, res, next) => {
+//     console.log('middleware executed !');
+//     next();
+// }
 // use middleware for all the routes
 // app.use(customMiddleware);
 
@@ -28,9 +27,10 @@ app.use('/api/users', userRoutes)
 app.use('/api/posts', postRoutes)
 
 // connect to database
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+// mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(async () => {
-        console.log(`Successfuly connected to: ${uri}`)
+        console.log(`Successfuly connected to: ${MONGO_URI}`)
         // Start Server
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
     })

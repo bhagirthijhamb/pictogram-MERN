@@ -2,7 +2,6 @@ import Grid from '@material-ui/core/Grid';
 // components
 import Post from './../post/Post'
 import { LOADING_DATA, SET_POSTS, LOADING_USER, SET_USER } from './../../context/types';
-//
 import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useCallback } from 'react';
 
@@ -40,7 +39,6 @@ const PostList = (props) => {
                 <Grid item sm={1} xs={12}>
                 </Grid>
                 <Grid item sm={7} xs={12}>
-                    <h2>Home</h2>
                     {postsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>

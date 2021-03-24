@@ -38,6 +38,7 @@ module.exports =  {
     },
     createUser: async (req, res) => {
         const { name, email, password } = req.body;
+        // Signup data Validation
         const { valid, errors } = validateSignupData(req.body);
         console.log(errors);
         // 400 - Bad request
@@ -77,14 +78,15 @@ module.exports =  {
                     res.status(400).json({ message: "Invalid email or password"});
                     return;
                 } else {
-                    const token = createToken({ id: user._id });
+                    // res.status(201).json({ messaage: "Successfully signed in"})
+                    const token = createToken({ id: user._id }); // we pass an object with id/_id as key and saved user _id as value
                     // save token in the cookie
                     res.cookie('token', token);
                     // send an empty response back
                     res.status(200).send(user);
                 }
             }   
-        } catch(err) {
+        } catch(err) { // error from developer side // errors from user side are handeled above
             console.log(err);
             next(err);
         }

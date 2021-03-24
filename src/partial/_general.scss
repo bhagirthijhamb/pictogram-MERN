@@ -14,10 +14,13 @@ html {
 }
 
 // Google font
-@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 .brand-logo {
-    font-family: 'Grand Hotel', cursive;
+    font-family: 'Pacifico', cursive !important;
+    font-size: 1.8rem !important;
+    margin-left: 3rem !important;
+    padding: 0 0 2px 0 !important;
 }
 
 // Variables
