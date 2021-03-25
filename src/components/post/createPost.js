@@ -124,7 +124,18 @@ const CreatePost = () => {
                 <DialogTitle>Post a new thought</DialogTitle>
                 <DialogContent>
                     <form onSubmit={handleSubmit}>
-                        <TextField name="body" type="text" label="Post..." multiline rows="3" placeholder="Share with your friends..."  value={text} className="textField" onChange={handleChange} fullWidth />
+                        <TextField name="body" type="text" label="Post..." multiline rows="3" placeholder="Share with your friends..."  value={text} className="textField" onChange={handleChange} fullWidth  
+                        style={{ marginBottom:"5px"}}
+                        />
+                        <Button type="submit" variant="contained" color="primary" 
+                        // disabled={state.ui.loading} 
+                        // onClick={(e) => postDetails(e)}
+                        style={{ float: "right", marginLeft: 5, backgroundColor: "#A5CAD2"}}
+                        >Submit
+                            {/* {state.ui.loading && (
+                                <CircularProgress size={30} className="progressSpinner" />
+                            )} */}
+                        </Button>
                         <input
                             accept="image/*"
                             className={classes.input}
@@ -135,19 +146,12 @@ const CreatePost = () => {
                         />
                         <label htmlFor="raised-button-file">
                             <Button raised component="span" 
-                            className={classes.button}
+                            className={classes.button} style={{ float: "right", backgroundColor: "lightgrey"}}
                             >
                             Upload
                             </Button>
                         </label>
-                        <Button type="submit" variant="contained" color="primary" 
-                        // disabled={state.ui.loading} 
-                        // onClick={(e) => postDetails(e)}
-                        >Submit
-                            {/* {state.ui.loading && (
-                                <CircularProgress size={30} className="progressSpinner" />
-                            )} */}
-                        </Button>
+                        
                     </form>
                 </DialogContent>
             </Dialog>
