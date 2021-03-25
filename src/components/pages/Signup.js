@@ -51,8 +51,14 @@ const SignUp = (props) => {
       setErrors(state.ui.errors)
     }
   }, [state.ui.errors])
+
   
   async function signUpUser(){
+    // frontend user input(email) validation
+    // if(!regex.test(email)){
+    //  setErrors({ email: "Invalid email" })
+    //  return
+    // }
     try {
       dispatch({ type: LOADING_UI });
       const url = `/api/users/`;

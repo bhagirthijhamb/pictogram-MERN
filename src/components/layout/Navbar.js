@@ -134,13 +134,15 @@ const NavBar = (props) => {
                             Subscribed
                         </Button>
                         <CreatePost />
-                        <Button component={Link} to="/user" aria-label="user profile page">
+                        <Button component={Link} to="/user" aria-label="user profile page" style={{ color: '#ee0000'}}>
                             <AccountCircleIcon />
                             {name}
                         </Button>
                         <Button className={classes.subscribedPosts_Btn} onClick={logout} title="Logout" aria-label="log out">
-                            <LockIcon />
-                            Log out
+                            {/* <Link to="/logout"> */}
+                                <LockIcon />
+                                Log out
+                            {/* </Link> */}
                         </Button>
                     </div>
                 </div>
