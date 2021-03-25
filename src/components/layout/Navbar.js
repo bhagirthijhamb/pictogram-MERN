@@ -1,6 +1,7 @@
 import CreatePost from './../post/CreatePost';
 import { useRouteMatch } from 'react-router-dom';
 import { Link, useHistory } from 'react-router-dom';
+import { useContext } from 'react';
 
 // MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -18,6 +19,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
 import SubscriptionsIcon from '@material-ui/icons/Subscriptions';
 import LockIcon from '@material-ui/icons/Lock';
+import { AppContext } from '../../context/appContext';
 
 const useStyles = makeStyles((theme) => ({
     navContainer: {
@@ -83,13 +85,14 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
         display: 'none',
         },
-    },
+    }
 }))
 
 const NavBar = (props) => {
     let { path, url } = useRouteMatch();
     const classes = useStyles();
     const history = useHistory();
+    const [ state, dispatch ] = useContext(AppContext);
 
     async function logout(){
         try{
@@ -106,6 +109,8 @@ const NavBar = (props) => {
         }
     }
 
+    const { credentials: {name} } = state.user;
+
     return (
         <AppBar>
             <Toolbar>
@@ -120,18 +125,22 @@ const NavBar = (props) => {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <CreatePost />
-                        <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts" aria-label="subscribed posts">
-                            <SubscriptionsIcon />
-                        </Button>
                         <Button color="inherit" component={Link} to="/" aria-label="home page">
                             <HomeIcon />
+                            Home
                         </Button>
+                        <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts" aria-label="subscribed posts">
+                            <SubscriptionsIcon />
+                            Subscribed
+                        </Button>
+                        <CreatePost />
                         <Button component={Link} to="/user" aria-label="user profile page">
                             <AccountCircleIcon />
+                            {name}
                         </Button>
                         <Button className={classes.subscribedPosts_Btn} onClick={logout} title="Logout" aria-label="log out">
                             <LockIcon />
+                            Log out
                         </Button>
                     </div>
                 </div>

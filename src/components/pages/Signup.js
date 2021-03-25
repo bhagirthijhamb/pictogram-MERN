@@ -39,10 +39,11 @@ const useStyles = makeStyles(theme => ({
 const SignUp = (props) => {
   const classes = useStyles();
   const [state, dispatch] = useContext(AppContext); 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [errors, setErrors] = useState({})
+  console.log(errors);
   
   useEffect(() => {
     if(state.ui.errors){
@@ -56,7 +57,8 @@ const SignUp = (props) => {
       dispatch({ type: LOADING_UI });
       const url = `/api/users/`;
       const method = 'POST';
-      const response = await fetch(url, {
+      const response = await fetch(url, 
+        {
           method,
           headers: {
               'Content-Type': 'application/json',
@@ -80,9 +82,9 @@ const SignUp = (props) => {
         body: JSON.stringify({ email, password })
       });
       console.log(loginResponse);
-      if(!loginResponse.ok){
-        throw new Error(data.message);
-      }
+      // if(!loginResponse.ok){
+      //   throw new Error(data.message);
+      // }
       props.getUser();
     } catch(err){
       console.log(err)
@@ -115,7 +117,7 @@ const SignUp = (props) => {
                 variant="outlined"
                 required
                 fullWidth
-                id="ame"
+                id="name"
                 label="Name"
                 name="name"
                 autoComplete="lname"

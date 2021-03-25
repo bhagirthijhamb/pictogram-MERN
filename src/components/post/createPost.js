@@ -114,6 +114,7 @@ const CreatePost = () => {
         <Fragment>
             <Button onClick={handleOpen}>
                 <AddCircleIcon />
+                Post
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm' className="postBabbleDialogBox" >
                 <div className="closePostBabbleBtn">
