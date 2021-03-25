@@ -25,9 +25,7 @@ const Home = (props) => {
 
     return (
         <div className="classes root container">
-            <Switch>
-                <Route exact path='/' component={PostList} />
-            </Switch>
+           {props.children}
         </div>
         
     )

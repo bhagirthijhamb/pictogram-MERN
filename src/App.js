@@ -13,6 +13,8 @@ import OtherUser from './components/profile/OtherUser';
 import Navbar from './components/layout/Navbar';
 import SubscribedUserPosts from './components/pages/SubscribedUserPosts';
 import EditUser from './components/profile/EditUser';
+import PostList from './components/post/PostList';
+
 
 // MUI 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -83,7 +85,9 @@ function App() {
                     if(!user){
                       return <Redirect to='/login' />;
                     }
-                    return <Home user={user} {...props} />
+                    return <Home user={user} {...props}>
+                      <PostList />
+                    </Home>
                   }} 
                 />
                 {/* <Route exact path='/signup' component={Signup} /> */}
