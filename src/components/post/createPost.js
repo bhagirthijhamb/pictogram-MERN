@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         display: 'none',
-    },
+    }
 }))
 const CreatePost = () => {
     let history = useHistory();
@@ -117,7 +117,7 @@ const CreatePost = () => {
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm' className="postBabbleDialogBox" >
                 <div className="closePostBabbleBtn">
-                    <Button onClick={handleClose} >
+                    <Button onClick={handleClose} style={{ float: "right"}}>
                         <CloseIcon />
                     </Button>
                 </div>

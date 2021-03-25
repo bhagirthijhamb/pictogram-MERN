@@ -14,6 +14,9 @@ exports.verifyToken = async(token) => {
             throw err;
         } 
         // console.log('payload', payload);
+        // we assigned { id: savedUser._id } object as user to jwt.sign()/ createToken in user controller
+        // we are assigning it here from payload to user
+
         user = payload;
         // console.log(user);
     })

@@ -7,8 +7,8 @@ const { verifyToken } =  require('./../utils/auth');
 const Post = require('./postModel');
 
 router.route('/').get(getPosts)
-router.use(verifyToken).route('/getSubscribedPosts').get(getSubscribedPosts)
 router.use(verifyToken).route('/').post(createPost);
+router.use(verifyToken).route('/getSubscribedPosts').get(getSubscribedPosts)
 // router.route('/').post(createPost);
 router.use(verifyToken).route('/myPosts').get(getMyPosts);
 router.use(verifyToken).route('/like').put(likePost);

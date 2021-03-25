@@ -40,6 +40,11 @@ function App() {
   const [user, setUser] = useState(undefined);
   console.log(user)
 
+  // useCallback() Returns a memoized callback.
+
+ //Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. shouldComponentUpdate).
+
+  // useCallback(fn, deps) is equivalent to useMemo(() => fn, deps).
   const getUser = useCallback(async function() {
     try {
       const response = await fetch('/api/users/me', {
@@ -73,9 +78,7 @@ function App() {
             {/* <div className="container"> */}
               <Switch>
                 {/* <Route exact path='/' component={Home} /> */}
-                <Route 
-                  exact 
-                  path='/' 
+                <Route exact path='/' 
                   render={ props => {
                     if(!user){
                       return <Redirect to='/login' />;
@@ -84,9 +87,7 @@ function App() {
                   }} 
                 />
                 {/* <Route exact path='/signup' component={Signup} /> */}
-                <Route 
-                  exact 
-                  path='/signup' 
+                <Route exact path='/signup' 
                   render={ props => {
                     if(user){
                       return <Redirect to='/' />;
@@ -95,9 +96,7 @@ function App() {
                   }} 
                 />
                 {/* <Route exact path='/login' component={Login} /> */}
-                <Route 
-                  exact 
-                  path='/login' 
+                <Route exact path='/login' 
                   render={ props => {
                     if(user){
                       return <Redirect to='/' />

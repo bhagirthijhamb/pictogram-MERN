@@ -36,6 +36,8 @@ module.exports = {
                 if(text.trim() === "" || !imageUrl){
                     return res.status(400).json({ message: "Must not be empty" });
                 }
+                // req.user has the current signedin users details
+                // because when we verified the user with jwt.verify() in verifyToken middleware (auth.js file). we attached userData to req.user
                 req.user.password = undefined;
                 const postData = new Post({
                     text,

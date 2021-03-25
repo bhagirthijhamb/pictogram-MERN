@@ -34,8 +34,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
         fontFamily: 'Pacifico',
         fontSize: '2rem',
-        // margin-left: 3rem;
-        // padding: 0 0 2px 0; 
         },
     search: {
         position: 'relative',
@@ -123,16 +121,16 @@ const NavBar = (props) => {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <CreatePost />
-                        <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts">
+                        <Button className={classes.subscribedPosts_Btn} component={Link} to="/subscribedPosts" aria-label="subscribed posts">
                             <SubscriptionsIcon />
                         </Button>
-                        <Button color="inherit" component={Link} to="/">
+                        <Button color="inherit" component={Link} to="/" aria-label="home page">
                             <HomeIcon />
                         </Button>
-                        <Button component={Link} to="/user">
+                        <Button component={Link} to="/user" aria-label="user profile page">
                             <AccountCircleIcon />
                         </Button>
-                        <Button className={classes.subscribedPosts_Btn} onClick={logout}>
+                        <Button className={classes.subscribedPosts_Btn} onClick={logout} title="Logout" aria-label="log out">
                             <LockIcon />
                         </Button>
                     </div>
