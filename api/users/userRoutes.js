@@ -16,4 +16,5 @@ router.use(verifyToken).route('/user/follow').put(followUser);
 router.use(verifyToken).route('/user/unfollow').put(unfollowUser);
 router.use(verifyToken).route('/user/editProfile').put(editUserProfile);
 router.use(verifyToken).route('/logout').get(logoutUser);
+
 module.exports = router;

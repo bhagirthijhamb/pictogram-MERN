@@ -106,7 +106,7 @@ const User = () => {
                                     Edit profile
                                   </Button>
                             </div>
-                        {/* Posts Followers Following */}
+                        {/* Posts, Followers, Following */}
                             <div className={classes.profileDetailsNumbers}>
                                 <Typography variant="h6">{myPosts && myPosts.length} posts</Typography>
                                 <Typography variant="h6">{followers && followers.length} followers</Typography>

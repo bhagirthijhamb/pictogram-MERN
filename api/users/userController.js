@@ -54,7 +54,7 @@ module.exports =  {
             const newUser = new User(req.body);
             const user = await newUser.save();
             if(user){
-                return res.status(201).json({ user: [user] })
+                return res.status(201).json(user)
             }
         } catch(err) {
             console.log(err);

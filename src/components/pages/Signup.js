@@ -72,7 +72,7 @@ const SignUp = (props) => {
           body: JSON.stringify({ name, email, password })
       })
       const data = await response.json();
-      console.log(data)
+      console.log('data', data)
       if(!response.ok){
         dispatch({
           type: SET_ERRORS,

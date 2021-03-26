@@ -40,7 +40,7 @@ const theme = createMuiTheme({
 
 function App() {
   const [user, setUser] = useState(undefined);
-  console.log(user)
+  // console.log(user)
 
   // useCallback() Returns a memoized callback.
 
@@ -69,7 +69,7 @@ function App() {
   useEffect(() => {
     getUser();
   }, [getUser])
-  console.log(user)
+  // console.log(user)
 
   return (
     <MuiThemeProvider theme={theme}>

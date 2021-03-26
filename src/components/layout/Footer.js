@@ -5,9 +5,14 @@ import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
     footer: {
-        padding: theme.spacing(3, 4),
+        padding: theme.spacing(2, 4),
         marginTop: 'auto',
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        position: 'fixed',
+        left:0,
+        bottom: 0,
+        width: '100%',
+        textAlign: 'center'
     },
     copyrightText: {
         margin: theme.spacing(0, 'auto')

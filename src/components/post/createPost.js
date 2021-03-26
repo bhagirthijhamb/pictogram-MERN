@@ -58,7 +58,7 @@ const CreatePost = () => {
             })
             const dataBack = await response.json();
             if(dataBack){
-                console.log(dataBack);
+                // console.log(dataBack);
                 setImageUrl(dataBack.url);
             }
         } catch(err){
