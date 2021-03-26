@@ -109,13 +109,16 @@ const NavBar = (props) => {
         }
     }
 
+    const { user } = state;
     const { credentials: {name} } = state.user;
 
     return (
         <AppBar>
             <Toolbar>
                 <div className={classes.navContainer}>
-                        <Typography className={classes.title} className="brand-logo" variant="h6" noWrap>Pictogram</Typography>
+                        <Link to={user ? "/" : "/login"}>
+                            <Typography className={classes.title} className="brand-logo" variant="h6" noWrap>Pictogram</Typography>
+                        </Link>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
