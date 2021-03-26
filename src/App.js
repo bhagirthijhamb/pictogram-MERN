@@ -39,28 +39,31 @@ const theme = createMuiTheme({
 })
 
 const Routing = (props) => {
-  const { user, getUser, setUser } = props;
   const history = useHistory();
+  const { user, getUser, setUser } = props;
   useEffect(() => {
-    // const user = JSON.parse(localStorage.getItem("user"))
     if(user){
-      history.push('/')
-    } else {
+      history.push('/');
+    } else{
       history.push('/login');
     }
-  }, [])
+  },[user])
+
   return(
     <Switch>
-      <Route exact path='/'>
-        <Home user={user} {...props}>
-          <PostList />
-        </Home>
-      </Route> 
+      {/* <Route exact path='/' component={Home} /> */}
+      <Route exact path='/' >
+          <Home user={user} {...props}>
+            <PostList />
+          </Home>
+      </Route>
+      {/* <Route exact path='/signup' component={Signup} /> */}
       <Route exact path='/signup'>
         <SignUp getUser={getUser} updateUser={setUser} {...props} />
       </Route>
-      <Route exact path='/login'>
-       <Login getUser={getUser} {...props} />
+      {/* <Route exact path='/login' component={Login} /> */}
+      <Route exact path='/login'> 
+        <Login getUser={getUser} {...props} />
       </Route>
       <Route exact path='/user' component={User} />
       <Route exact path='/user/:userId' component={OtherUser} />
@@ -102,7 +105,6 @@ function App() {
   useEffect(() => {
     getUser();
   }, [getUser])
-  // console.log(user)
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -110,7 +112,7 @@ function App() {
         <Router>
           <div className="app">
             {user && <Navbar updateUser={setUser} />}
-            <Routing user={user}/>
+            <Routing user={user} setUser={setUser} getUser={getUser} />
             {/* <div className="container"> */}
               {/* <Switch> */}
                 {/* <Route exact path='/' component={Home} /> */}
