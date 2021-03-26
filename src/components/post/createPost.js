@@ -97,6 +97,7 @@ const CreatePost = () => {
                         type: POST_POST,
                         payload: data
                     })
+                    handleClose();
                     history.push('/');
                 }
             } catch(err){
