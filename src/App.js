@@ -1,6 +1,6 @@
 import './App.scss';
 import { useState, useEffect, useCallback } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 // App Context
 import { AppContextProvider } from './context/appContext';
 // Components
@@ -37,6 +37,39 @@ const theme = createMuiTheme({
   },
   spacing: [0, 4, 8, 16, 32, 64]
 })
+
+const Routing = (props) => {
+  const { user, getUser, setUser } = props;
+  const history = useHistory();
+  useEffect(() => {
+    // const user = JSON.parse(localStorage.getItem("user"))
+    if(user){
+      history.push('/')
+    } else {
+      history.push('/login');
+    }
+  }, [])
+  return(
+    <Switch>
+      <Route exact path='/'>
+        <Home user={user} {...props}>
+          <PostList />
+        </Home>
+      </Route> 
+      <Route exact path='/signup'>
+        <SignUp getUser={getUser} updateUser={setUser} {...props} />
+      </Route>
+      <Route exact path='/login'>
+       <Login getUser={getUser} {...props} />
+      </Route>
+      <Route exact path='/user' component={User} />
+      <Route exact path='/user/:userId' component={OtherUser} />
+      <Route path='/subscribedPosts' component={SubscribedUserPosts} />
+      <Route exact path='/editProfile' component={EditUser} />
+      <Route path='/logout' component={Logout} />
+    </Switch>
+  )
+}
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -77,10 +110,11 @@ function App() {
         <Router>
           <div className="app">
             {user && <Navbar updateUser={setUser} />}
+            <Routing user={user}/>
             {/* <div className="container"> */}
-              <Switch>
+              {/* <Switch> */}
                 {/* <Route exact path='/' component={Home} /> */}
-                <Route exact path='/' 
+                {/* <Route exact path='/' 
                   render={ props => {
                     if(!user){
                       return <Redirect to='/login' />;
@@ -89,31 +123,31 @@ function App() {
                       <PostList />
                     </Home>
                   }} 
-                />
+                /> */}
                 {/* <Route exact path='/signup' component={Signup} /> */}
-                <Route exact path='/signup' 
+                {/* <Route exact path='/signup' 
                   render={ props => {
                     if(user){
                       return <Redirect to='/' />;
                     } 
                     return <SignUp getUser={getUser} updateUser={setUser} {...props} />
                   }} 
-                />
+                /> */}
                 {/* <Route exact path='/login' component={Login} /> */}
-                <Route exact path='/login' 
+                {/* <Route exact path='/login' 
                   render={ props => {
                     if(user){
                       return <Redirect to='/' />
                     }
                     return <Login getUser={getUser} {...props} />
                   }} 
-                />
-                <Route exact path='/user' component={User} />
+                /> */}
+                {/* <Route exact path='/user' component={User} />
                 <Route exact path='/user/:userId' component={OtherUser} />
                 <Route path='/subscribedPosts' component={SubscribedUserPosts} />
                 <Route exact path='/editProfile' component={EditUser} />
-                <Route path='/logout' component={Logout} />
-              </Switch>
+                <Route path='/logout' component={Logout} /> */}
+              {/* </Switch> */}
             {/* </div> */}
             {user && <Footer />}
           </div>
