@@ -61,9 +61,6 @@ const User = () => {
             },
         })
         const json = await response.json();
-        // console.log(json);
-        // console.log(json.user);
-        // console.log(json.userPosts);
         if(!response.ok){
             throw new Error(json.message);
         }
@@ -123,7 +120,8 @@ const User = () => {
                         <div className={classes.profilePageGallery}>
                             {myPosts.map(post => (
                                 <div key={post._id} className={classes.profilePageGalleryImage}>
-                                    <img src={post.imageUrl}/>
+                                    <img src={post.imageUrl} alt={post.text} />
+                                    <p>{post.text}</p>
                                 </div>
                             ))}
                         </div>

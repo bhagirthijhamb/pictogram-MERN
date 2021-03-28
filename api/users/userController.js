@@ -223,8 +223,6 @@ module.exports =  {
         }
     },
     logoutUser: async (req, res) => {
-        console.log('---------------------------------')
-        console.log('inside logout user')
         try {
             const expire = await res.cookie("token", "", { expires: new Date(0)});
             if (expire){
@@ -233,8 +231,6 @@ module.exports =  {
                     res.status(200).json('token deleted');
                 }
             }
-            
-            // res.redirect('/');
         } catch(err) {
             console.log(err)
         }

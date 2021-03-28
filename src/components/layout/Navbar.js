@@ -1,5 +1,4 @@
 import CreatePost from './../post/CreatePost';
-import { useRouteMatch } from 'react-router-dom';
 import { Link, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 
@@ -89,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NavBar = (props) => {
-    let { path, url } = useRouteMatch();
     const classes = useStyles();
     const history = useHistory();
     const [ state, dispatch ] = useContext(AppContext);
@@ -100,7 +98,6 @@ const NavBar = (props) => {
             const json = await response.json();
             console.log(json)
             if(response.ok){
-                console.log('response is OK')
                 props.updateUser(undefined)
                 history.push('/login')
             }

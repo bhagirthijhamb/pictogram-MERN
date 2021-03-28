@@ -14,20 +14,17 @@ import { useContext, useEffect, useCallback } from 'react';
 
 
 const Home = (props) => {
-
-
+    const { user, children } = props;
     const [state, dispatch] = useContext(AppContext); 
     
     useEffect(() => {
         dispatch({ type: SET_USER, payload: props.user })
-    },[props.user])
-
+    },[user])
 
     return (
         <div className="classes root container">
-           {props.children}
-        </div>
-        
+           {children}
+        </div> 
     )
 } 
 

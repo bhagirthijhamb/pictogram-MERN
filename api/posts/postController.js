@@ -73,6 +73,7 @@ module.exports = {
     likePost: async(req, res) => {
         try {
             const likedPost = await Post.findByIdAndUpdate(req.body.postId, {
+                // $push to push into an array - { push to array: likes, what to push: req.user._id }  
                 $push:{likes: req.user._id}
             }, { 
                 new: true
@@ -90,6 +91,7 @@ module.exports = {
     unlikePost: async(req, res) => {
         try {
             const unlikedPost = await Post.findByIdAndUpdate(req.body.postId, {
+                // pull will remove the user from likes array
                 $pull:{likes: req.user._id}
             }, { 
                 new: true
