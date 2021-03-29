@@ -72,7 +72,7 @@ const OtherUser = () => {
                 },
             })
             const otherUserDetails = await response.json();
-            console.log(otherUserDetails)
+            // console.log(otherUserDetails)
             if(!response.ok){
                 throw new Error(otherUserDetails.message);
             }
@@ -81,8 +81,8 @@ const OtherUser = () => {
                 type: SET_OTHER_USER,
                 payload: otherUserDetails
             })
-            console.log(state.otherUser);
-            console.log(state.otherUser.credentials.followers);
+            // console.log(state.otherUser);
+            // console.log(state.otherUser.credentials.followers);
         } catch (err) {
             console.log({ err });
         }
@@ -99,7 +99,7 @@ const OtherUser = () => {
                 body: JSON.stringify({ followId: userId })
             })
             const json = await response.json()
-            console.log(json);
+            // console.log(json);
             if(!response.ok){
                 throw new Error(json.error) 
             }
@@ -177,7 +177,8 @@ const OtherUser = () => {
                                     {state.otherUser.credentials.website ? <Typography variant="h6" className={classes.website}><a href={`http://${state.otherUser.credentials.website}`} target="_black">{state.otherUser.credentials.website}</a></Typography> : null}
                                 </div>
                                 <div className={classes.follow_unfollow_Btn}>
-                                   {state.user.credentials.following.includes(otherUser.user._id)
+                                   {/* {state.user.credentials.following.includes(otherUser.user._id) */}
+                                   {state.otherUser.credentials.followers.includes(state.user.credentials._id)
                                     ? 
                                     <Button
                                         type="submit"

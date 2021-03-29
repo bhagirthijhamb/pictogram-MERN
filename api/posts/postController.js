@@ -127,7 +127,6 @@ module.exports = {
     },
     deletePost: async(req, res) => {
         try {
-            
             const postToDelete = await Post.findOne({ _id: req.params.postid}).populate("author", "_id").exec()
             if(!postToDelete) {
                 res.status(422).json({ error: 'post not found' });
