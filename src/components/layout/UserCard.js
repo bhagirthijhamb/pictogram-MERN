@@ -51,47 +51,13 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: '#FF7A89',
-        fontSize: 16
+        fontSize: 14
     },
     authorName: {
         marginLeft: '10px !important',
         fontWeight: "bold",
-        fontSize: '1rem',
+        fontSize: '.9rem',
         // color: '#CC616E'
-    },
-    postDelete: {
-        position: "absolute",
-        right: '10px'
-    },
-    comments: {
-        width: '95%',
-        padding: '0 20px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: "center",
-        margin: "0 0"
-    },
-    commentSection: {
-        display: "flex"
-    },
-    form: {
-        // width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    commentName: {
-        color: "#CC616E",
-        fontWeight: 'bold',
-        marginRight: 10
-    },
-    commentDelete: {
-        padding: 0
-    },
-    likeBtn: {
-        padding: 0
-    },
-    commentBtn: {
-        padding: 0,
-        marginLeft: 20
     }
 }))
 
@@ -102,18 +68,9 @@ const UserCard = (props) => {
     const classes = useStyles();
     const [comment, setComment] = useState('');
 
-    // const handleSubmit = async(e) => {
-    //     try {
-    //         e.preventDefault();
-    //         // console.log(comment);
-    //         makeComment(comment, _id);
-    //     } catch(err){
-    //         console.log(err);
-    //     }
-    // }
     return (
          <Card className={classes.root} key={_id}>
-            <CardActions>
+            <CardActions className="userCard">
                 <Avatar aria-label="recipe" className={classes.avatar}>
                     <div className={classes.profileImage}>
                         <img style={{width: '50px', height: '50px', borderRadius: '25px'}} 
@@ -126,29 +83,22 @@ const UserCard = (props) => {
                 >
                         {name}
                 </Typography>
-                {/* {author._id == state.user.credentials._id &&  */}
-                    {/* <IconButton aria-label="settings" className={classes.postDelete}>
-                        <DeleteOutlineIcon  
-                        // onClick={() => {deletePost(_id)}} 
-                        />
-                    </IconButton> */}
-                {/* } */}
-                 <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.follow}
-                    // onClick={() => followUser()}
+                    <Link 
+                        to={`/user/${_id}`}
+                        style={{ 
+                            color: 'rgb(255, 122, 137)',
+                            fontWeight: 'bold',
+                            float: 'right', 
+                            padding: '3px 5px', 
+                            // marginLeft: '50px',
+                            border: '1px solid rgb(255, 122, 137)',
+                            borderRadius: '3px',
+                        }}
                     >
-                    <Link to={`/user/${_id}`}>Go</Link>
-                </Button>
+                        Go
+                    </Link>
+                {/* </Button> */}
             </CardActions>
-            {/* <CardMedia
-                className={classes.media}
-                image={imageUrl}
-                title="Paella dish"
-            /> */}
-           
         </Card>
     )
 }

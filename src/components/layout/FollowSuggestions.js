@@ -29,15 +29,17 @@ const FollowSuggestions = ( props ) => {
   state.users.map(eachUser => {
     if(state.user.credentials.following){
       if(!state.user.credentials.following.includes(eachUser._id)){
-        otherUsers.push(eachUser)
+        if(eachUser._id !== state.user.credentials._id){
+          otherUsers.push(eachUser)
+        }
       };
     }
   })
+
 console.log(otherUsers);
 
 
    const usersMarkup = otherUsers.map(user =>{
-
         return <UserCard key={user._id} user={user} />
     }
     )
