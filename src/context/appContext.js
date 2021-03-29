@@ -1,10 +1,11 @@
 import { ContactsOutlined } from '@material-ui/icons';
 import React, { useReducer, createContext } from 'react';
-import { SET_USER, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST, DELETE_COMMENT, SET_OTHER_USER, FOLLOW_USER, UNFOLLOW_USER } from './types';
+import { SET_USER, SET_USERS, SET_USER_POSTS, SET_POSTS, LOADING_DATA , LOADING_UI, POST_POST, SET_ERRORS, CLEAR_ERRORS, LOADING_USER, LIKE_POST, UNLIKE_POST, SUBMIT_COMMENT, DELETE_POST, DELETE_COMMENT, SET_OTHER_USER, FOLLOW_USER, UNFOLLOW_USER } from './types';
 
 export const AppContext = createContext();
 
 const initialState = {
+    users: [],
     post: {
         posts: [],
         post: {},
@@ -29,6 +30,11 @@ const initialState = {
 
 const appReducer = (state, action) => {
     switch (action.type) {
+        case SET_USERS:
+            return {
+                ...state,
+                users: [...action.payload]
+            }
         case SET_USER:
             // console.log(action.payload)
             return {

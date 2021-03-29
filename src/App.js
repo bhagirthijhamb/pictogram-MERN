@@ -15,6 +15,7 @@ import SubscribedUserPosts from './components/pages/SubscribedUserPosts';
 import EditUser from './components/profile/EditUser';
 import PostList from './components/post/PostList';
 import Logout from './components/pages/Logout';
+import FollowSuggestions from './components/layout/FollowSuggestions';
 
 // MUI 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -55,6 +56,7 @@ const Routing = (props) => {
       <Route exact path='/' >
         <Home user={user} {...props}>
           <PostList />
+          <FollowSuggestions />
         </Home>
       </Route>
       {/* <Route exact path='/signup' component={Signup} /> */}

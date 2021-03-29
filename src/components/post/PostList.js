@@ -33,16 +33,16 @@ const PostList = (props) => {
 
     return (
         <div className="classes root">
-            <Grid container spacing={4}>
+            {/* <Grid container spacing={4}>
                 <Grid item sm={1} xs={12}>
                 </Grid>
-                <Grid item sm={7} xs={12}>
+                <Grid item sm={7} xs={12}> */}
                     {postsMarkup}
-                </Grid>
+                {/* </Grid>
                 <Grid item sm={4} xs={12}>
-                    <h2>Follow..</h2>
+                    {props.children}
                 </Grid>
-            </Grid>
+            </Grid> */}
         </div>
         
     )

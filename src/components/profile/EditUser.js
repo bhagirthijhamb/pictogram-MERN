@@ -155,7 +155,7 @@ const EditUser = () => {
                                 <Button raised component="span" 
                                 className={classes.button}
                                 >
-                                Change Profile Photo
+                                Change Photo
                                 </Button>
                             </label>
                           </div>

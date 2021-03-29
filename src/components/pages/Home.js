@@ -23,7 +23,19 @@ const Home = (props) => {
 
     return (
         <div className="classes root container">
-           {children}
+           {/* {children} */}
+            <Grid container spacing={4}>
+                <Grid item sm={1} xs={12}>
+                </Grid>
+                <Grid item sm={7} xs={12}>
+                    {children[0]}
+                </Grid>
+                <Grid item sm={2} xs={12}>
+                    {children[1]}
+                </Grid>
+                <Grid item sm={1} xs={12}>
+                </Grid>
+            </Grid>
         </div> 
     )
 } 

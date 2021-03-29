@@ -15,10 +15,11 @@ module.exports = {
             }
         },
     getSubscribedPosts: async (req, res) => {
-        console.log(req.user);
-        console.log('following', req.user.following);
-        console.log('followers', req.user.followers);
+        // console.log(req.user);
+        // console.log('following', req.user.following);
+        // console.log('followers', req.user.followers);
         try {
+            // if author in following (if author is in the following list, then only return the post)
             const posts = await Post.find({ author: { $in: req.user.following }}).populate("author", "_id name imageUrl").populate("comments.postedBy", "_id name");
             if(posts){
                 console.log(posts)

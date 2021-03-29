@@ -22,7 +22,7 @@ const SubscribedUserPosts = (props) => {
         try {
             const response = await fetch('/api/posts/getSubscribedPosts');
             const postRes = await response.json();
-            console.log(postRes);
+            // console.log(postRes);
             setSubscribedPosts(postRes);
         } catch(err) {
             console.log(err)
