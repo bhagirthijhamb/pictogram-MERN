@@ -177,8 +177,8 @@ const OtherUser = () => {
                                     {state.otherUser.credentials.website ? <Typography variant="h6" className={classes.website}><a href={`http://${state.otherUser.credentials.website}`} target="_black">{state.otherUser.credentials.website}</a></Typography> : null}
                                 </div>
                                 <div className={classes.follow_unfollow_Btn}>
-                                   {/* {state.user.credentials.following.includes(otherUser.user._id) */}
-                                   {state.otherUser.credentials.followers.includes(state.user.credentials._id)
+                                   {state.user.credentials.following.includes(otherUser.user._id)
+                                //    {state.otherUser.credentials.followers.includes(state.user.credentials._id)
                                     ? 
                                     <Button
                                         type="submit"

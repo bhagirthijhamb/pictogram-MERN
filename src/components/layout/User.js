@@ -51,12 +51,12 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: '#FF7A89',
-        fontSize: 20
+        fontSize: 16
     },
     authorName: {
-        marginLeft: '20px !important',
+        marginLeft: '10px !important',
         fontWeight: "bold",
-        fontSize: '1.3rem',
+        fontSize: '1rem',
         // color: '#CC616E'
     },
     postDelete: {
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
 
 const User = (props) => {
     const [state, dispatch] = useContext(AppContext); 
-    const { _id } = props.user
+    const { _id, name, imageUrl } = props.user
     // console.log(props.post)
     const classes = useStyles();
     const [comment, setComment] = useState('');
@@ -117,56 +117,38 @@ const User = (props) => {
                 <Avatar aria-label="recipe" className={classes.avatar}>
                     <div className={classes.profileImage}>
                         <img style={{width: '50px', height: '50px', borderRadius: '25px'}} 
-                        // src={author.imageUrl}
+                        src={imageUrl}
                         />
                     </div>
                 </Avatar>
                 <Typography className={classes.authorName} component={Link} 
-                // to={author._id !== state.user.credentials._id ? `/user/${author._id}` : `/user` }
+                to={_id !== state.user.credentials._id ? `/user/${_id}` : `/user` }
                 >
-                        {/* {author.name} */}
+                        {name}
                 </Typography>
                 {/* {author._id == state.user.credentials._id &&  */}
-                    <IconButton aria-label="settings" className={classes.postDelete}>
+                    {/* <IconButton aria-label="settings" className={classes.postDelete}>
                         <DeleteOutlineIcon  
                         // onClick={() => {deletePost(_id)}} 
                         />
-                    </IconButton>
+                    </IconButton> */}
                 {/* } */}
+                 <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.follow}
+                    // onClick={() => followUser()}
+                    >
+                    <Link to={`/user/${_id}`}>Go</Link>
+                </Button>
             </CardActions>
             {/* <CardMedia
                 className={classes.media}
                 image={imageUrl}
                 title="Paella dish"
             /> */}
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                {/* {text} */}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                {/* {likes.includes(state.user.credentials._id)
-                ? <IconButton aria-label="add to favorites" className={classes.likeBtn}>
-                    <FavoriteIcon style={{ color: '#FF7A89', fontSize: 28 }} 
-                    // onClick={() => {unlikePost(_id)}} 
-                    />
-                  </IconButton>
-                : <IconButton aria-label="add to favorites" className={classes.likeBtn}>
-                    <FavoriteIcon style={{ color: 'grey', fontSize: 28 }} 
-                    // onClick={() => {likePost(_id)}} 
-                    />
-                  </IconButton>
-                } */}
-                 <Typography variant="body2" color="textSecondary" component="p">
-                    {/* {likes.length} likes */}
-                </Typography>
-                <IconButton aria-label="add to favorites" className={classes.commentBtn}>
-                    <ChatIcon />
-                </IconButton>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {/* {comments.length} comments */}
-                </Typography>
-            </CardActions>  
+           
         </Card>
     )
 }

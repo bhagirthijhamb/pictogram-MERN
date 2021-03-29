@@ -30,7 +30,8 @@ const Home = (props) => {
                 <Grid item sm={7} xs={12}>
                     {children[0]}
                 </Grid>
-                <Grid item sm={2} xs={12}>
+                <Grid item sm={3} xs={12}>
+                    <h3>You may follow...</h3>
                     {children[1]}
                 </Grid>
                 <Grid item sm={1} xs={12}>
