@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('./../keys');
+// const { JWT_SECRET } = require('./../keys');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.createToken = (user) => {
     // jwt.sign() takes user object with id/_id as key and saved user _id as value & JWT_SECRET

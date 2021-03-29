@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.2.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.17",
@@ -20,7 +21,6 @@
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
-  "proxy": "http://localhost:5000",
   "scripts": {
     "start:client": "react-scripts start",
     "start:server": "nodemon 'API/server.js' --ignore 'src'",
@@ -48,5 +48,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

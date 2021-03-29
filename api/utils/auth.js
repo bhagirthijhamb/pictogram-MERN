@@ -1,6 +1,7 @@
 const { verifyToken } = require('./../utils/tokenService');
 const User = require('./../users/userModel');
-const { JWT_SECRET } = require('../keys');
+// const { JWT_SECRET } = require('../keys');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // requireLogin Middleware 
 // module.exports = (req, res, next) => {
