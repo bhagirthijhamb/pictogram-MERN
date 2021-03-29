@@ -56,7 +56,7 @@ const Routing = (props) => {
       <Route exact path='/' >
         <Home user={user} {...props}>
           <PostList />
-          <FollowSuggestions />
+          <FollowSuggestions user={user} />
         </Home>
       </Route>
       {/* <Route exact path='/signup' component={Signup} /> */}

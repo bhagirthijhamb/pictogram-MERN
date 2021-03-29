@@ -1,10 +1,10 @@
 import React from 'react';
-import User from './../layout/User';
+import UserCard from './UserCard';
 import { useContext, useEffect, useCallback } from 'react';
 import { AppContext } from './../../context/appContext';
 import  { SET_USERS } from './../../context/types';
 
-const FollowSuggestions = () => {
+const FollowSuggestions = ( props ) => {
   const [ state, dispatch ] = useContext(AppContext);
 
   const refresh = useCallback( async() => {
@@ -24,10 +24,23 @@ const FollowSuggestions = () => {
       refresh(); 
   }, [refresh]);
 
-   const usersMarkup = state.users.map(user =>{
-            return <User key={user._id} user={user} />
-        }
-        )
+  let otherUsers =[];
+
+  state.users.map(eachUser => {
+    if(state.user.credentials.following){
+      if(!state.user.credentials.following.includes(eachUser._id)){
+        otherUsers.push(eachUser)
+      };
+    }
+  })
+console.log(otherUsers);
+
+
+   const usersMarkup = otherUsers.map(user =>{
+
+        return <UserCard key={user._id} user={user} />
+    }
+    )
 
   return (
     <div className="classes root">

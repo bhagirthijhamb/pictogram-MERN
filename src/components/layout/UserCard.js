@@ -22,7 +22,7 @@ import { Button } from '@material-ui/core';
 // Context
 import { AppContext } from '../../context/appContext';
 import { useState, useContext, useEffect, useCallback } from 'react';
-import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST, DELETE_POST, DELETE_COMMENT } from './../../context/types';
+import { LIKE_POST, SUBMIT_COMMENT, UNLIKE_POST, DELETE_POST, DELETE_COMMENT } from '../../context/types';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const User = (props) => {
+const UserCard = (props) => {
     const [state, dispatch] = useContext(AppContext); 
     const { _id, name, imageUrl } = props.user
     // console.log(props.post)
@@ -153,4 +153,4 @@ const User = (props) => {
     )
 }
 
-export default User;
+export default UserCard;
