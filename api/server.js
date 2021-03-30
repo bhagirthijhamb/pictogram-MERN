@@ -17,7 +17,10 @@ const connectDB = require('./utils/db');
 // const dbName = 'pictogram';
 // const uri = `mongodb://localhost:27017/${dbName}`;
 
-// console.log('__dirname', __dirname);
+console.log('__dirname', __dirname);
+const dirname = __dirname + '/../';
+console.log('dirname', dirname);
+
 // console.log(process.env.MONGO_URI, process.env.NODE_ENV);
 // console.log(path.resolve(__dirname, './../.env'))
 
@@ -44,8 +47,8 @@ if (process.env.NODE_ENV === 'production') {
     // only add this part if you are using React Router
     app.get('*', (req,res) =>{
         // console.log('__dirname', __dirname);
-        console.log(path.join(__dirname+'/build/index.html'));
-        res.sendFile(path.join(__dirname+'/build/index.html'));
+        // console.log(path.join(__dirname+'/build/index.html'));
+        res.sendFile(path.join(dirname+'/build/index.html'));
     });
 }
 
