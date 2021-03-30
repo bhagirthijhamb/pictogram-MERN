@@ -18,7 +18,7 @@ const connectDB = require('./utils/db');
 // const uri = `mongodb://localhost:27017/${dbName}`;
 
 // console.log('__dirname', __dirname);
-// const dirname = __dirname + '/../';
+const dirname = __dirname + '/../';
 // console.log('dirname', dirname);
 // console.log('path.join', path.join(dirname+'/build/index.html'));
 
