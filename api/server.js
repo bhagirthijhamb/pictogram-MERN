@@ -22,7 +22,6 @@ const connectDB = require('./utils/db');
 // console.log('dirname', dirname);
 // console.log('path.join', path.join(dirname+'/build/index.html'));
 
-// console.log(process.env.MONGO_URI, process.env.NODE_ENV);
 // console.log(path.resolve(__dirname, './../.env'))
 
 // dotenv.config({ path: path.resolve(__dirname, './../.env')});
