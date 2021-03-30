@@ -1,1 +1,1 @@
-worker: node api/server.js
+web: node api/server.js
