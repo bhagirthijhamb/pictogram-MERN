@@ -17,9 +17,10 @@ const connectDB = require('./utils/db');
 // const dbName = 'pictogram';
 // const uri = `mongodb://localhost:27017/${dbName}`;
 
-console.log('__dirname', __dirname);
-const dirname = __dirname + '/../';
-console.log('dirname', dirname);
+// console.log('__dirname', __dirname);
+// const dirname = __dirname + '/../';
+// console.log('dirname', dirname);
+// console.log('path.join', path.join(dirname+'/build/index.html'));
 
 // console.log(process.env.MONGO_URI, process.env.NODE_ENV);
 // console.log(path.resolve(__dirname, './../.env'))
@@ -43,12 +44,11 @@ app.use('/api/posts', postRoutes)
 
 // server.js at the very end of the file.
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('./../build'));
+    app.use(express.static(path.join(dirname, '/build')));
     // only add this part if you are using React Router
     app.get('*', (req,res) =>{
-        // console.log('__dirname', __dirname);
-        // console.log(path.join(__dirname+'/build/index.html'));
-        res.sendFile(path.join(dirname+'/build/index.html'));
+        // res.sendFile(path.join(dirname+'/build/index.html'));
+        res.sendFile(path.resolve(dirname, 'build', 'index.html' ));
     });
 }
 
