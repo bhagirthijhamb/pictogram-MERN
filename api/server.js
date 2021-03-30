@@ -43,7 +43,7 @@ app.use('/api/posts', postRoutes)
 
 // server.js at the very end of the file.
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('./build'));
+    app.use(express.static('./../build'));
     // only add this part if you are using React Router
     app.get('*', (req,res) =>{
         // console.log('__dirname', __dirname);
