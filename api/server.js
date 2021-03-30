@@ -53,6 +53,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 const SERVER_PORT = process.env.SERVER_PORT || 5000;
+const SERVER_HOST = process.env.HOST || '0.0.0.0';
 
 // Start Server
-app.listen(SERVER_PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${SERVER_PORT}`));
+app.listen(SERVER_PORT, SERVER_HOST, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${SERVER_PORT} and host ${SERVER_HOST}`));
